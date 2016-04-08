@@ -7,10 +7,16 @@ namespace Assets.Code.Common.BaseClasses
 {
     public class CharacterBase : MonoBehaviour
     {
-        public float MovementSpeed { get; set; }
+        public float MovementSpeed;
+
+        public float MaxSpeed;
+
+        public float MovementDecay;
+
+        public Vector3 MovementDirection { get; set; }
 
         public float Health { get; set; }
-
+        
         public float Energy { get; set; }
 
         public int Money { get; set; }
@@ -24,7 +30,9 @@ namespace Assets.Code.Common.BaseClasses
         public void Init()
         {
             this.Inventory = new Inventory();
-            MovementSpeed = 2f;
+            MovementSpeed = 0.5f;
+            MaxSpeed = 6f;
+            MovementDecay = .95f;
         }
     }
 }
