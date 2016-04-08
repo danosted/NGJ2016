@@ -1,0 +1,117 @@
+fileFormatVersion: 2
+guid: ccfd0c7c2900f1b45bd4a767616d0cdb
+timeCreated: 1460155662
+licenseType: Free
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: CharacterMap_0
+    21300002: CharacterMap_1
+    21300004: CharacterMap_2
+  serializedVersion: 2
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 1
+    linearTexture: 0
+    correctGamma: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 0
+  cubemapConvolution: 0
+  cubemapConvolutionSteps: 7
+  cubemapConvolutionExponent: 1.5
+  seamlessCubemap: 0
+  textureFormat: -1
+  maxTextureSize: 2048
+  textureSettings:
+    filterMode: 0
+    aniso: 16
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 0
+  lightmap: 0
+  rGBM: 0
+  compressionQuality: 50
+  allowsAlphaSplitting: 0
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 25
+  alphaIsTransparency: 1
+  textureType: 8
+  buildTargetSettings: []
+  spriteSheet:
+    sprites:
+    - name: CharacterMap_0
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 0
+        width: 43
+        height: 43
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -7.5, y: 21.5}
+        - {x: -21.5, y: 9.5}
+        - {x: -21.5, y: -21.5}
+        - {x: 20.5, y: -21.5}
+        - {x: 21.5, y: -20.5}
+        - {x: 21.5, y: 6.5}
+        - {x: 12.5, y: 21.5}
+    - name: CharacterMap_1
+      rect:
+        serializedVersion: 2
+        x: 50
+        y: 0
+        width: 44
+        height: 44
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -10, y: 22}
+        - {x: -22, y: 13}
+        - {x: -22, y: -16}
+        - {x: -20, y: -22}
+        - {x: 20, y: -22}
+        - {x: 22, y: -15}
+        - {x: 22, y: 12}
+        - {x: 7, y: 22}
+    - name: CharacterMap_2
+      rect:
+        serializedVersion: 2
+        x: 100
+        y: 0
+        width: 43
+        height: 43
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 7.5, y: 21.5}
+        - {x: -8.5, y: 21.5}
+        - {x: -21.5, y: 8.5}
+        - {x: -21.5, y: -8.5}
+        - {x: -17.5, y: -14.5}
+        - {x: -11.5, y: -21.5}
+        - {x: 16.5, y: -21.5}
+        - {x: 21.5, y: -16.5}
+        - {x: 21.5, y: 9.5}
+    outline: []
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
