@@ -12,6 +12,7 @@ namespace Assets.Code.Common
         public const string CellManagerName = "CellManager";
         public const string SupplyManagerName = "SupplyManager";
         public const string PukeManager = "PukeManager";
+        public const string FartManagerName = "FartManager";
         public const string ProjectileHandlerName = "ProjectileHandler";
         
     }

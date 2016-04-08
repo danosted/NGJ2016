@@ -20,10 +20,13 @@ namespace Assets.Code.Initialization
             var pukeManager = ManagerCollection.Instance.GetManager(Constants.PukeManager);
             var pk = pukeManager.GetPrefabFromType<PukeBase>();
             pk.SourceCharacter = pl;
+            var fartManager = ManagerCollection.Instance.GetManager(Constants.FartManagerName);
+            var fa = fartManager.GetPrefabFromType<FartBase>();
+            fa.SourceCharacter = pl;
 
 
             ManagerCollection.Instance.MovementHandler.MoveCharacterContinuous(pl);
-            ManagerCollection.Instance.ProjectileHandler.CheckForPukeContinous(pk);
+            ManagerCollection.Instance.ProjectileHandler.CheckForPukeAndFartContinous(pk,fa);
 
             LogicCollection.Instance.CellLogic.CreateStandardCellGrid(3, 3);
             var cells = ManagerCollection.Instance.GetManager(Constants.CellManagerName).GetAllActiveObjects<CellBase>();
