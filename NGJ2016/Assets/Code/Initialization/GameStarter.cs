@@ -17,7 +17,13 @@ namespace Assets.Code.Initialization
             var man = ManagerCollection.Instance.GetManager(Constants.CharacterManagerName);
             var pl = man.GetPrefabFromType<CharacterBase>();
             pl.Init();
+            var pukeManager = ManagerCollection.Instance.GetManager(Constants.PukeManager);
+            var pk = pukeManager.GetPrefabFromType<PukeBase>();
+            pk.SourceCharacter = pl;
+
+
             ManagerCollection.Instance.MovementHandler.MoveCharacterContinuous(pl);
+            ManagerCollection.Instance.ProjectileHandler.CheckForPukeContinous(pk);
 
             LogicCollection.Instance.CellLogic.CreateStandardCellGrid(3, 3);
             var cells = ManagerCollection.Instance.GetManager(Constants.CellManagerName).GetAllActiveObjects<CellBase>();
