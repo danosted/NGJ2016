@@ -26,7 +26,8 @@ namespace Assets.Code.Initialization
 
 
             ManagerCollection.Instance.MovementHandler.MoveCharacterContinuous(pl);
-            ManagerCollection.Instance.ProjectileHandler.CheckForPukeAndFartContinous(pk,fa);
+            ManagerCollection.Instance.ProjectileHandler.CheckForPukeAndFartContinous(pk, fa);
+            var audioHandler = ManagerCollection.Instance.AudioHandler;
             //LogicCollection.Instance.CellLogic.CreateStandardCellGrid(3, 3);
             LogicCollection.Instance.CellLogic.CreateMap();
             ManagerCollection.Instance.UIHandler.SetCharacter(pl);
