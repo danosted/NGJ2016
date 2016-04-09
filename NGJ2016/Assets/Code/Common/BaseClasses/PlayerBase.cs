@@ -24,6 +24,11 @@ namespace Assets.Code.Common.BaseClasses
         [SerializeField]
         public float FartSpeedBonus;
 
+        public bool CanFart
+        {
+            get { return FartMeter.PercentFull > 0.1; }
+        }
+
         public FartMeterBase FartMeter { get; set; }
 
         public override void Move()
@@ -63,7 +68,7 @@ namespace Assets.Code.Common.BaseClasses
                 ManagerCollection.Instance.GetManager(Constants.UiManagerName)
                     .GetPrefabFromType<Canvas>()
                     .GetComponentInChildren<FartMeterBase>();
-            FartSpeedBonus = 5;
+            FartSpeedBonus = 3;
         }
     }
 }

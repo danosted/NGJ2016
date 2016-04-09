@@ -28,7 +28,7 @@ namespace Assets.Code.PrefabAccess
             var isFarting = Input.GetKey(KeyCode.Mouse1);
             if (_fart == null)
                 return;
-            _fart.SourceCharacter.IsFarting = isFarting;
+            _fart.SourceCharacter.IsFarting = isFarting  && _fart.SourceCharacter.CanFart;
 
             if (isPuking)
             {
@@ -56,7 +56,7 @@ namespace Assets.Code.PrefabAccess
                 Debug.DrawRay(_fart.SourceCharacter.transform.position, mouseDirection);
                 _fart.transform.Translate(mouseDirection.normalized*_fart.Offset);
 
-                if (_fart.SourceCharacter.FartMeter.OhShitTriggered && _timeSinceLastShit < 5.0f)
+                if (_fart.SourceCharacter.FartMeter.OhShitTriggered && _timeSinceLastShit > 0.5f)
                 {
                     _fart.GetComponent<Renderer>().enabled = true;
                     _fart.transform.position = _fart.SourceCharacter.transform.position;

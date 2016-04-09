@@ -20,10 +20,8 @@ namespace Assets.Code.PrefabAccess
 
         void Update()
         {
-            var isPuking = Input.GetKey(KeyCode.Mouse0);
-            var isFarting = Input.GetKey(KeyCode.Mouse1);
 
-            if (isFarting || _character.FartMeter.OhShitTriggered)
+            if (_character.IsFarting)
             {
                 _character.FartMeter.DecreaseMeter();
             }
