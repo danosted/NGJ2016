@@ -16,7 +16,7 @@ namespace Assets.Code.Common.BaseClasses
         {
             get
             {
-                return FartMeter.OhShitTriggered;
+                return FartMeter.OhShitTriggered || IsShitting;
             }
         }
 
