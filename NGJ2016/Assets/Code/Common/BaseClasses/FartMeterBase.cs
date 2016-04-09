@@ -8,28 +8,33 @@ namespace Assets.Code.Common.BaseClasses
     public class FartMeterBase : MonoBehaviour
     {
         public float PercentFull { get; set; }
-        public Vector2 OffsetMin { get; set; }
-        public Vector2 OffsetMax { get; set; }
-        public float OffsetMaxXMin { get; set; }
+        public float OffsetXMin { get; set; }
+        public float OffsetXMax { get; set; }
+        //public float OffsetMaxXMin { get; set; }
 
         public float IncreaseSpeed { get; set; }
         public float DecreaseSpeed { get; set; }
 
         public bool OhShitTriggered { get; set; }
-
-        public FartMeterBase()
+        
+        void Awake()
         {
-            OffsetMin = new Vector2(10, 170);
-            OffsetMax = new Vector2(-885, -10);
-            OffsetMaxXMin = -600f;
+            //OffsetMaxXMin = -600f;
 
             IncreaseSpeed = 0.15f;
             DecreaseSpeed = 0.3f;
 
             PercentFull = 0.0f;
             var rectTransform = gameObject.GetComponent<RectTransform>();
-            rectTransform.offsetMax = OffsetMax;
-            rectTransform.offsetMin = OffsetMin;
+            Debug.Log("rectTransform " + rectTransform);
+
+            OffsetXMax = rectTransform.rect.xMax;
+            OffsetXMin = rectTransform.rect.xMin;
+
+            Debug.Log("OffsetXMax " + OffsetXMax);
+            Debug.Log("OffsetXMin " + OffsetXMin);
+
+            Debug.Log("rectTransform.offsetMax " + rectTransform.offsetMax);
         }
 
         public void DecreaseMeter()
@@ -57,7 +62,8 @@ namespace Assets.Code.Common.BaseClasses
         private void Render()
         {
             var rectTransform = gameObject.GetComponent<RectTransform>();
-            rectTransform.offsetMax = new Vector2(OffsetMax.x - (OffsetMax.x - OffsetMaxXMin) * PercentFull, OffsetMax.y);
+            rectTransform.offsetMax = new Vector2(OffsetXMax * PercentFull * 2f, rectTransform.offsetMax.y);
+            Debug.Log("rectTransform.offsetMax " + rectTransform.offsetMax);
         }
 
         private void OhShit()
