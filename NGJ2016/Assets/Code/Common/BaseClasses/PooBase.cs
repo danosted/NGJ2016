@@ -14,7 +14,7 @@ namespace Assets.Code.Common.BaseClasses
 
         public PooBase()
         {
-            Speed = 5.0f;
+            Speed = 10.0f;
         }
 
         void Update()

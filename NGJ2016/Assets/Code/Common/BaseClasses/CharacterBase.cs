@@ -1,20 +1,26 @@
-﻿using Assets.Code.PrefabAccess;
-using UnityEngine;
+﻿﻿using UnityEngine;
 using System.Collections;
 using Assets.Code;
 using Assets.Code.Common.Objects;
 
 namespace Assets.Code.Common.BaseClasses
 {
-    public class CharacterBase : MonoBehaviour
+    public abstract class CharacterBase : MonoBehaviour
     {
-        public float MovementSpeed;
+        [SerializeField]
+        public float BaseMovementSpeed;
 
+        [SerializeField]
         public float MaxSpeed;
 
+        [SerializeField]
         public float MovementDecay;
 
         public Vector3 MovementDirection { get; set; }
+
+        public Vector3 FacingDirection { get; set; }
+
+        public float MovementSpeed;
 
         public float Health { get; set; }
         
@@ -22,34 +28,16 @@ namespace Assets.Code.Common.BaseClasses
 
         public int Money { get; set; }
 
-        private bool _isFarting;
-        public bool IsFarting
-        {
-            get
-            {
-                return FartMeter.OhShitTriggered || _isFarting;
-            }
-            set { _isFarting = value; }
-        }
-
-        public float FartSpeedBonus { get; set; }
 
         public Vector2 Position2D { get; private set; }
 
-        public Inventory Inventory { get; private set; }
+        public abstract void Move();
 
-        public CellBase CurrentTagetCell { get; set; }
-
-        public FartMeterBase FartMeter { get; set; }
-
-        public void Init()
+        public virtual void Init()
         {
-            this.Inventory = new Inventory();
-            MovementSpeed = 0.5f;
+            BaseMovementSpeed = 0.5f;
             MaxSpeed = 6f;
             MovementDecay = .95f;
-            FartSpeedBonus = 4.0f;
-            FartMeter = ManagerCollection.Instance.GetManager(Constants.UiManagerName).GetPrefabFromType<Canvas>().GetComponentInChildren<FartMeterBase>();
         }
     }
 }

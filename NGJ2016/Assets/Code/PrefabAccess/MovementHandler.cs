@@ -28,28 +28,12 @@ namespace Assets.Code.PrefabAccess
 
             foreach (var c in _movingCharacters)
             {
-                //c.transform.position = c.transform.position + new Vector3(c.MovementSpeed * hor, c.MovementSpeed * vert, 0f) * Time.deltaTime;
+                //c.transform.position = c.transform.position + new Vector3(c.BaseMovementSpeed * hor, c.BaseMovementSpeed * vert, 0f) * Time.deltaTime;
 
-                var mouseDirection = Camera.main.ScreenToWorldPoint(Input.mousePosition) - c.transform.position;
-                if (mouseDirection.magnitude > 1 || c.IsFarting)
-                {
-                    mouseDirection = mouseDirection.normalized;
-                }
-                var hor = mouseDirection.x;
-                var vert = mouseDirection.y;
+                c.Move();
 
-                var totalSpeed = c.IsFarting ? c.FartSpeedBonus*c.MovementSpeed : c.MovementSpeed;
 
-                var direction = new Vector3(totalSpeed * hor, totalSpeed * vert, 0f);
-                c.MovementDirection += direction;
-                c.MovementDirection *= c.MovementDecay;
-                var totalMaxSpeed = c.IsFarting ? c.FartSpeedBonus * c.MaxSpeed : c.MaxSpeed;
-                if (c.MovementDirection.magnitude > totalMaxSpeed)
-                {
-                    c.MovementDirection *= totalMaxSpeed / c.MovementDirection.magnitude;
-                }
-
-                c.transform.position += c.MovementDirection  * Time.deltaTime;
+                
             }
             var deltaSeconds = (int)(Time.deltaTime * 1000);
         }
