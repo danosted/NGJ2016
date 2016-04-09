@@ -128,7 +128,7 @@ namespace Assets.Code.BusinessLogic
 
         public void CreateMap()
         {
-            var mapLength = 3;
+            var mapLength = 4;
             var width = rnd.Next(20, 30);
             var height = rnd.Next(10, 20);
             var widthPrev = 0;
@@ -200,7 +200,7 @@ namespace Assets.Code.BusinessLogic
                     continue;
                 }
   
-
+                // Laver en random udgang
                 CreateRandomExit(map, exitDirection, nextRoomWallSize,out exitCell);
                 //mapPrev = map;
                 if (mapLength > 1)
@@ -209,6 +209,25 @@ namespace Assets.Code.BusinessLogic
                 }
                 else
                 {
+                    switch (exitDirection)
+                    {
+                        case Compass.North:
+                            widthOffset = (int) exitCell.transform.position.x - 1;
+                            heightOffset = (int)exitCell.transform.position.y + 1;
+                            break;
+                        case Compass.South:
+                            widthOffset = (int)exitCell.transform.position.x - 1;
+                            heightOffset = (int)exitCell.transform.position.y - 3;
+                            break;
+                        case Compass.West:
+                            widthOffset = (int)exitCell.transform.position.x - 3;
+                            heightOffset = (int)exitCell.transform.position.y - 1;
+                            break;
+                        case Compass.East:
+                            widthOffset = (int)exitCell.transform.position.x + 1;
+                            heightOffset = (int)exitCell.transform.position.y - 1;
+                            break;
+                    };
                     CreateRandomRoom(width, height, 0, 0, widthOffset, heightOffset,true);
                 }
                 //CreateBranchRooms(mapPrev,widthOffset,heightOffset);
@@ -233,7 +252,6 @@ namespace Assets.Code.BusinessLogic
         }
 
        
-
         public bool TestNewRoomArea(int width, int height,int widthOffset, int heightOffset)
         {
             var cells = CellManager.GetAllActiveObjects<CellBase>();
@@ -286,7 +304,7 @@ namespace Assets.Code.BusinessLogic
                                         break;
                 case Compass.East:
                     offsetForExit = (Math.Abs(room.height - nextRoomWallSize) / 2) + 1;
-                    i = room.width * rnd.Next(offsetForExit, room.height - offsetForExit) - 1;
+                    i = room.width * (rnd.Next(offsetForExit+1, room.height - offsetForExit)-1) - 1;
                     break;
                 case Compass.West:
                     offsetForExit = (Math.Abs(room.height - nextRoomWallSize) / 2) + 1;

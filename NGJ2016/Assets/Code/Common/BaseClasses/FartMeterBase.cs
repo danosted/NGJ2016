@@ -28,8 +28,8 @@ namespace Assets.Code.Common.BaseClasses
             var rectTransform = gameObject.GetComponent<RectTransform>();
             Debug.Log("rectTransform " + rectTransform);
 
-            OffsetXMax = rectTransform.rect.xMax;
-            OffsetXMin = rectTransform.rect.xMin;
+            OffsetXMax = rectTransform.offsetMax.x;
+            OffsetXMin = rectTransform.offsetMin.x;
 
             Debug.Log("OffsetXMax " + OffsetXMax);
             Debug.Log("OffsetXMin " + OffsetXMin);
@@ -62,7 +62,7 @@ namespace Assets.Code.Common.BaseClasses
         private void Render()
         {
             var rectTransform = gameObject.GetComponent<RectTransform>();
-            rectTransform.offsetMax = new Vector2(OffsetXMax * PercentFull * 2f, rectTransform.offsetMax.y);
+            rectTransform.offsetMax = new Vector2((OffsetXMax - OffsetXMin) * PercentFull + OffsetXMin, rectTransform.offsetMax.y);
         }
 
         private void OhShit()

@@ -2,6 +2,9 @@
 using UnityEngine;
 using Assets.Code.Common.Objects;
 using Assets.Code.PrefabAccess;
+using UnityEditor;
+using UnityEditor.SceneManagement;
+using UnityEngine.SceneManagement;
 
 namespace Assets.Code.Common.BaseClasses
 {
@@ -10,7 +13,7 @@ namespace Assets.Code.Common.BaseClasses
 
         public Inventory Inventory { get; private set; }
 
-
+        private Canvas canvas;
         private bool _isFarting;
         public bool IsFarting
         {
@@ -137,17 +140,28 @@ namespace Assets.Code.Common.BaseClasses
         public override void Init()
         {
             this.Inventory = new Inventory();
-            BaseMovementSpeed = 0.25f;
+            BaseMovementSpeed = 0.20f;
             MovementSpeed = 1f;
             MaxSpeed = 3f;
             MovementDecay = .95f;
-            var canvas = ManagerCollection.Instance.GetManager(Constants.UiManagerName).GetPrefabFromType<Canvas>();
+            canvas = GameObject.Find("Canvas").GetComponent<Canvas>();
             FartMeter = canvas.GetComponentInChildren<FartMeterBase>();
             PoopMeter = canvas.GetComponentInChildren<PoopMeterBase>();
             DisgraceMeter = canvas.GetComponentInChildren<DisgraceMeterBase>();
             FartSpeedBonus = 2.5f;
             transform.position = new Vector3(1,1);
             anim = GetComponent<Animator>();
+        }
+
+        public void OnCollisionEnter2D(Collision2D coll)
+        {
+            var toilet = coll.gameObject.GetComponent<ToiletBase>();
+            if (toilet != null)
+            {
+                var winText = canvas.GetComponentInChildren<UnityEngine.UI.Text>();
+                winText.text = "Let it riiiiiiipppp!!!";
+
+            }
         }
     }
 }

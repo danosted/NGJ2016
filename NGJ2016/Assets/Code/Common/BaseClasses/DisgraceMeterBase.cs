@@ -14,8 +14,7 @@ namespace Assets.Code.Common.BaseClasses
 
         public float IncreaseSpeed { get; set; }
         public float DecreaseSpeed { get; set; }
-
-        public bool Poopargeddon { get; set; }
+        
         
         void Awake()
         {
@@ -26,33 +25,38 @@ namespace Assets.Code.Common.BaseClasses
 
             PercentFull = 1.0f;
             var rectTransform = gameObject.GetComponent<RectTransform>();
-            Debug.Log("rectTransform " + rectTransform);
+            Debug.Log("DisgraceMeterBase rectTransform " + rectTransform);
 
-            OffsetXMax = rectTransform.rect.xMax;
-            OffsetXMin = rectTransform.rect.xMin;
+            OffsetXMax = rectTransform.offsetMax.x;
+            OffsetXMin = rectTransform.offsetMin.x;
 
-            Debug.Log("OffsetXMax " + OffsetXMax);
-            Debug.Log("OffsetXMin " + OffsetXMin);
+            Debug.Log("DisgraceMeterBase OffsetXMax " + OffsetXMax);
+            Debug.Log("DisgraceMeterBaseOffsetXMin " + OffsetXMin);
 
-            Debug.Log("rectTransform.offsetMax " + rectTransform.offsetMax);
+            Debug.Log("DisgraceMeterBase rectTransform.offsetMax " + rectTransform.offsetMax);
         }
 
         public void DecreaseMeter()
         {
             PercentFull -= Time.deltaTime * DecreaseSpeed;
+            
+            Render();
+        }
+        
+        public void Render()
+        {
             if (PercentFull < 0)
             {
                 //TODO: You lost
             }
-            Render();
-        }
-        
-
-        private void Render()
-        {
+            else if (PercentFull > 1)
+            {
+                PercentFull = 1f;
+            }
             var rectTransform = gameObject.GetComponent<RectTransform>();
             Debug.Log(PercentFull);
-            rectTransform.offsetMax = new Vector2(OffsetXMax * PercentFull * 2, rectTransform.offsetMax.y);
+            rectTransform.offsetMax = new Vector2((OffsetXMax - OffsetXMin)* PercentFull +OffsetXMin, rectTransform.offsetMax.y);
+            
         }
     }
 }
