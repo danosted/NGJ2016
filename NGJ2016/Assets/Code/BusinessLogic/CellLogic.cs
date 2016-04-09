@@ -103,7 +103,7 @@ namespace Assets.Code.BusinessLogic
                         }
 
                     }
-                    //SetCellNeighboursIterative(cell, cells, w+ widthOffset, h+ heightOffset, width, height);
+                    SetCellNeighbours(cell, w, h, width, height, widthOffset,heightOffset);
                 }
             }
             return cells;
@@ -117,17 +117,27 @@ namespace Assets.Code.BusinessLogic
             var height = rnd.Next(10, 20);
             var widthPrev = 0;
             var heightPrev = 0;
+            var widthOffsetPrev = 0;
+            var heightOffsetPrev = 0;
             
             var widthOffset = 0;
             var heightOffset = 0;
-
-
-            var a = CreateRandomRoom(width, height, rnd.Next(5, 10), rnd.Next(5, 10));
-            var exitDirection = CreateRandomExit(a);
-            for (int i = 0; i < mapLength; i++)
+            Compass exitDirection;
+            CellBase exitCell;
+            var maxAttempts = 50;
+   
+            var map = CreateRandomRoom(width, height, rnd.Next(5, 10), rnd.Next(5, 10));
+            exitDirection = (Compass)Enum.GetValues(typeof(Compass)).GetValue(rnd.Next(4));
+            CreateRandomExit(map, exitDirection, out exitCell);
+            //for (int i = 0; i < mapLength; i++)
+            while(mapLength > 0 && maxAttempts > 0)
             {
+                maxAttempts--;
                 widthPrev = width;
                 heightPrev = height;
+                widthOffsetPrev = widthOffset;
+                heightOffsetPrev = heightOffset;
+                exitDirection = (Compass)Enum.GetValues(typeof(Compass)).GetValue(rnd.Next(4));
                 switch (exitDirection)
                 {
                     case Compass.North:
@@ -154,36 +164,100 @@ namespace Assets.Code.BusinessLogic
                         widthOffset += widthPrev;
                         heightOffset += (int)Math.Round((heightPrev - height) / 2.0); ;
                         break;
+                };
+                if (TestNewRoomArea(width, height, widthOffset, heightOffset) == false)
+                {
+                    widthOffset = widthOffsetPrev;
+                    heightOffset = heightOffsetPrev;
+                    width = widthPrev;
+                    height = heightPrev;
+                    continue;
                 }
-                var b = CreateRandomRoom(width, height, rnd.Next(5, 10), rnd.Next(5, 10), widthOffset, heightOffset);
-                exitDirection = CreateRandomExit(b);
+                mapLength--;
+                if (mapLength >= 0)
+                {
+                    CreateRandomExit(map, exitDirection, out exitCell);
+                };
+                map = CreateRandomRoom(width, height, rnd.Next(5, 10), rnd.Next(5, 10), widthOffset, heightOffset);
+                switch (exitDirection)
+                {
+                    case Compass.North:
+                        CreateEntrance(exitCell.NeighbourUp);
+                        break;
+                    case Compass.South:
+                        CreateEntrance(exitCell.NeighbourDown);
+                        break;
+                    case Compass.West:
+                        CreateEntrance(exitCell.NeighbourLeft);
+                        break;
+                    case Compass.East:
+                        CreateEntrance(exitCell.NeighbourRight);
+                        break;
+                };
+
             }
         }
 
-        public Compass CreateRandomExit(Room room)
+        public bool TestNewRoomArea(int width, int height,int widthOffset, int heightOffset)
+        {
+            var cells = CellManager.GetAllActiveObjects<CellBase>();
+            for (int i = 0; i < width; i++)
+            {
+                // Checks bottom boarder
+                if(cells.Find(c => c.transform.position.x == widthOffset+i && c.transform.position.y == heightOffset) != null)
+                {
+                    return false;
+                }
+                // Check top boader
+                if (cells.Find(c => c.transform.position.x == widthOffset + i && c.transform.position.y == heightOffset+height-1) != null)
+                {
+                    return false;
+                }
+            }
+            for(int i = 0; i < height; i++)
+            {
+                // Checks west boarder
+                if (cells.Find(c => c.transform.position.x == widthOffset && c.transform.position.y == heightOffset+i) != null)
+                {
+                    return false;
+                }
+                // Checks east boarder
+                if (cells.Find(c => c.transform.position.x == widthOffset + width-1 && c.transform.position.y == heightOffset + i) != null)
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+        public void CreateEntrance(CellBase cell)
+        {
+            CellManager.RecyclePrefab(cell.Wall.gameObject);
+        }
+        
+        public void CreateRandomExit(Room room, Compass direction,out CellBase exitCell)
         {
             var rnd = new System.Random();
-            Compass direction = (Compass)Enum.GetValues(typeof(Compass)).GetValue(rnd.Next(4));
             var i = 0;
+            var offsetForExit = 4;
             switch (direction)
             {
                 case Compass.North:
-                    i = room.cells.Count() - rnd.Next(2, room.width - 2);
+                    i = room.cells.Count() - rnd.Next(offsetForExit, room.width - offsetForExit);
                     break;
                 case Compass.South:
-                    i = rnd.Next(2, room.width - 2);
+                    i = rnd.Next(offsetForExit, room.width - offsetForExit);
 
                     break;
                 case Compass.East:
-                    i = room.width * rnd.Next(2, room.height - 2) - 1;
+                    i = room.width * rnd.Next(offsetForExit, room.height - offsetForExit) - 1;
 
                     break;
                 case Compass.West:
-                    i = room.width * rnd.Next(2, room.height - 2);
+                    i = room.width * rnd.Next(offsetForExit, room.height - offsetForExit);
                     break;
             };
             CellManager.RecyclePrefab(room.cells[i].Wall.gameObject);
-            return direction;
+            exitCell = room.cells[i];
 
         }
         public Room CreateRandomRoom(int width, int height, int blockCount, int supplyCount, int widthOffset = 0, int heightOffset = 0)
@@ -191,35 +265,36 @@ namespace Assets.Code.BusinessLogic
             var grid = CreateStandardCellGrid(width, height, widthOffset, heightOffset);
             //var startCell = CellManager.StartCell;
             //var endCell = CellManager.EndCell;
-            while (blockCount > 0)
-            {
-                for (var w = 1; w < width - 1; w++)
-                {
-                    var randomHeight = UnityEngine.Random.Range(0, height - 1);
-                    var cell = grid.Find(c => c.transform.position.x == w+ widthOffset && c.transform.position.y == randomHeight+ heightOffset);
-                    RecycleCell(cell);
-                    cell = CreateAndPlaceCellInGrid(w + widthOffset, randomHeight + heightOffset, grid, CellType.BlockedCell);
-                    SetCellNeighbours(cell, w + widthOffset, randomHeight + heightOffset, width + widthOffset, height + heightOffset);
-                    blockCount--;
-                    if (blockCount <= 0) break;
-                }
-            }
-            while (supplyCount > 0)
-            {
-                for (var w = 1; w < width - 1; w++)
-                {
-                    var randomHeight = UnityEngine.Random.Range(0, height - 1);
-                    var cell = grid.Find(c => c.transform.position.x == w + widthOffset && c.transform.position.y == randomHeight + heightOffset);
 
-                    if (cell.Wall == null)
-                    {
-                        cell.Supply = ManagerCollection.Instance.GetManager(Constants.SupplyManagerName).GetPrefabFromType<SupplyBase>();
-                        cell.Supply.transform.position = new Vector3(w + widthOffset, randomHeight + heightOffset, 0f);
-                        supplyCount--;
-                        if (supplyCount <= 0) break;
-                    }
-                }
-            }
+            //while (blockCount > 0)
+            //{
+            //    for (var w = 1; w < width - 1; w++)
+            //    {
+            //        var randomHeight = UnityEngine.Random.Range(1, height - 1);
+            //        var cell = grid.Find(c => c.transform.position.x == w+ widthOffset && c.transform.position.y == randomHeight+ heightOffset);
+            //        RecycleCell(cell);
+            //        cell = CreateAndPlaceCellInGrid(w + widthOffset, randomHeight + heightOffset, grid, CellType.BlockedCell);
+            //        SetCellNeighbours(cell, w + widthOffset, randomHeight + heightOffset,  widthOffset,  heightOffset);
+            //        blockCount--;
+            //        if (blockCount <= 0) break;
+            //    }
+            //}
+            //while (supplyCount > 0)
+            //{
+            //    for (var w = 1; w < width - 1; w++)
+            //    {
+            //        var randomHeight = UnityEngine.Random.Range(1, height - 1);
+            //        var cell = grid.Find(c => c.transform.position.x == w + widthOffset && c.transform.position.y == randomHeight + heightOffset);
+
+            //        if (cell.Wall == null)
+            //        {
+            //            cell.Supply = ManagerCollection.Instance.GetManager(Constants.SupplyManagerName).GetPrefabFromType<SupplyBase>();
+            //            cell.Supply.transform.position = new Vector3(w + widthOffset, randomHeight + heightOffset, 0f);
+            //            supplyCount--;
+            //            if (supplyCount <= 0) break;
+            //        }
+            //    }
+            //}
             var room = new Room { width = width, height = height, cells = grid };
             return room;
         }
@@ -272,48 +347,12 @@ namespace Assets.Code.BusinessLogic
             return cell;
         }
 
-        private void SetCellNeighbours(CellBase cell, int w, int h, int width, int height)
+        private void SetCellNeighbours(CellBase cell, int w, int h, int width, int height, int widthOffset = 0, int heightOffset = 0)
         {
-            // For all left-most
-            if (w == 0 && 0 < h)
-            {
-                SetBelowCellRelation(cell, w, h);
-                SetAboveCellRelation(cell, w, h);
-                SetRightCellRelation(cell, w, h);
-            }
-
-            // For all bottom-most  TODO 1 (DRO)
-            if (0 < w && h == 0)
-            {
-                SetLeftCellRelation(cell, w, h);
-                SetAboveCellRelation(cell, w, h);
-                SetRightCellRelation(cell, w, h);
-            }
-
-            // For all right-most
-            if (w == width - 1 && 0 < h)
-            {
-                SetBelowCellRelation(cell, w, h);
-                SetLeftCellRelation(cell, w, h);
-                SetAboveCellRelation(cell, w, h);
-            }
-
-            // For all top-most
-            if (0 < w && h == height - 1)
-            {
-                SetBelowCellRelation(cell, w, h);
-                SetLeftCellRelation(cell, w, h);
-                SetRightCellRelation(cell, w, h);
-            }
-
-            // For all in the middle
-            if (0 < h && 0 < w && h < height - 1 && w < width - 1)
-            {
-                SetBelowCellRelation(cell, w, h);
-                SetLeftCellRelation(cell, w, h);
-                SetAboveCellRelation(cell, w, h);
-                SetRightCellRelation(cell, w, h);
-            }
+            SetBelowCellRelation(cell, w + widthOffset, h + heightOffset);
+            SetLeftCellRelation(cell, w + widthOffset, h + heightOffset);
+            SetAboveCellRelation(cell, w + widthOffset, h + heightOffset);
+            SetRightCellRelation(cell, w + widthOffset, h + heightOffset);
 
             // Pathfinding
             cell.Distance = int.MaxValue;
@@ -325,6 +364,8 @@ namespace Assets.Code.BusinessLogic
         {
             var cells = CellManager.GetAllActiveObjects<CellBase>();
             var rightCell = cells.Find(c => c.transform.position.x == w + 1 && c.transform.position.y == h);
+            if (rightCell == null)
+                return;
             cell.NeighbourRight = rightCell;
             cell.NeighBours.Add(rightCell);
 
@@ -336,6 +377,8 @@ namespace Assets.Code.BusinessLogic
         {
             var cells = CellManager.GetAllActiveObjects<CellBase>();
             var leftCell = cells.Find(c => c.transform.position.x == w - 1 && c.transform.position.y == h);
+            if (leftCell == null)
+                return;
             cell.NeighbourLeft = leftCell;
             cell.NeighBours.Add(leftCell);
 
@@ -362,58 +405,13 @@ namespace Assets.Code.BusinessLogic
         {
             var cells = CellManager.GetAllActiveObjects<CellBase>();
             var aboveCell = cells.Find(c => c.transform.position.x == w && c.transform.position.y == h + 1);
+            if (aboveCell == null)
+                return;
             cell.NeighbourUp = aboveCell;
             cell.NeighBours.Add(aboveCell);
 
             aboveCell.NeighbourDown = cell;
             aboveCell.NeighBours.Add(cell);
-        }
-
-        private void SetCellNeighboursIterative(CellBase cell, List<CellBase> cells, int w, int h, int width, int height)
-        {
-            // For all left-most
-            if (w == 0 && 0 < h)
-            {
-                var belowCell = cells[width * (h - 1) + w];
-                cell.NeighbourDown = belowCell;
-                cell.NeighBours.Add(belowCell);
-
-                belowCell.NeighbourUp = cell;
-                belowCell.NeighBours.Add(cell);
-            }
-
-            // For all bottom-most
-            if (0 < w && h == 0)
-            {
-                var leftCell = cells[width * h + (w - 1)];
-                cell.NeighbourLeft = leftCell;
-                cell.NeighBours.Add(leftCell);
-
-                leftCell.NeighbourRight = cell;
-                leftCell.NeighBours.Add(cell);
-            }
-
-            // For all top right
-            if (0 < h && 0 < w)
-            {
-                var belowCell = cells[width * (h - 1) + w];
-                cell.NeighbourDown = belowCell;
-                cell.NeighBours.Add(belowCell);
-
-                belowCell.NeighbourUp = cell;
-                belowCell.NeighBours.Add(cell);
-
-                var leftCell = cells[width * h + (w - 1)];
-                cell.NeighbourLeft = leftCell;
-                cell.NeighBours.Add(leftCell);
-
-                leftCell.NeighbourRight = cell;
-                leftCell.NeighBours.Add(cell);
-            }
-
-            // Pathfinding
-            cell.Distance = int.MaxValue;
-            cell.Previous = null;
         }
         #endregion
     }
