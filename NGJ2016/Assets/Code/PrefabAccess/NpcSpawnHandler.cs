@@ -84,7 +84,7 @@ namespace Assets.Code.PrefabAccess
         void Update()
         {
             var r = Random.value;
-            if (ActiveNpcs.Count >= _maxNpcs && r < _spawnRate)
+            if (ActiveNpcs.Count <= _maxNpcs && r < _spawnRate)
             {
                 SpawnNpc();
             }

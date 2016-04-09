@@ -14,35 +14,76 @@ namespace Assets.Code.Common.BaseClasses
     {
         public Guid Id;
 
+
+        private ManagerBase _characterManager;
+        public ManagerBase CharacterManager
+        {
+            get
+            {
+                if (_characterManager == null)
+                {
+                    _characterManager = ManagerCollection.Instance.GetManager(Constants.CharacterManagerName);
+                }
+                return _characterManager;
+            }
+        }
+
+        private PlayerBase _player;
+        private PlayerBase Player
+        {
+            get
+            {
+                if (_player == null)
+                {
+                    _player = CharacterManager.GetAllActiveObjects<PlayerBase>().First();
+                }
+                return _player;
+            }
+        }
+
+        [SerializeField]
+        public NpcStrategy Strategy;
+
+        [SerializeField]
+        public float PanicSpeed;
+
         public override void Move()
         {
             switch (Strategy)
             {
                 case NpcStrategy.Idle:
                 case NpcStrategy.Look:
-                    var man = ManagerCollection.Instance.GetManager(Constants.CharacterManagerName);
-                    var player = man.GetAllActiveObjects<PlayerBase>().First();
                     MovementSpeed = 0;
-                    FacingDirection = player.transform.position - transform.position;
+                    FacingDirection = Player.transform.position - transform.position;
                     break;
                 case NpcStrategy.Panic:
                     MovementSpeed = 1;
+                    MovementDirection = Quaternion.AngleAxis(UnityEngine.Random.value*10-10, Vector3.forward) * FacingDirection;
+                    MovementDirection = new Vector3(MovementDirection.x, MovementDirection.y, 0).normalized * PanicSpeed;
+
                     break;
             }
             transform.right = FacingDirection;
             transform.position += MovementDirection * MovementSpeed * Time.deltaTime;
         }
 
-        [SerializeField]
-        public NpcStrategy Strategy;
+        public void OnCollisionEnter2D(Collision2D coll)
+        {
+            if (coll.gameObject.GetComponent<PooBase>() != null || coll.gameObject.GetComponent<PlayerBase>() != null)
+            {
+                Strategy = NpcStrategy.Panic;
+            }
+        }
 
         public override void Init()
         {
-            Id = new Guid();
+            Id = Guid.NewGuid();
             Strategy = NpcStrategy.Look;
             BaseMovementSpeed = 0.5f;
             MaxSpeed = 6f;
+            PanicSpeed = 6f;
             MovementDecay = .95f;
+            
         }
     }
 }
