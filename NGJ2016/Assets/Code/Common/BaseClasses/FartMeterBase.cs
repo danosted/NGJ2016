@@ -63,7 +63,6 @@ namespace Assets.Code.Common.BaseClasses
         {
             var rectTransform = gameObject.GetComponent<RectTransform>();
             rectTransform.offsetMax = new Vector2(OffsetXMax * PercentFull * 2f, rectTransform.offsetMax.y);
-            Debug.Log(rectTransform.offsetMax.x);
         }
 
         private void OhShit()
