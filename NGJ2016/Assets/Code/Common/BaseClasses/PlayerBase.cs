@@ -10,7 +10,6 @@ namespace Assets.Code.Common.BaseClasses
         
         public Inventory Inventory { get; private set; }
 
-        public CellBase CurrentTagetCell { get; set; }
 
         private bool _isFarting;
         public bool IsFarting
@@ -85,6 +84,7 @@ namespace Assets.Code.Common.BaseClasses
                     .GetPrefabFromType<Canvas>()
                     .GetComponentInChildren<FartMeterBase>();
             FartSpeedBonus = 3;
+            transform.position = new Vector3(1,1);
         }
     }
 }
