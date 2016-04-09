@@ -24,6 +24,8 @@ namespace Assets.Code.Common.BaseClasses
                     MovementSpeed = 1;
                     break;
             }
+
+            transform.position += MovementDirection * MovementSpeed * Time.deltaTime;
         }
 
         [SerializeField]

@@ -14,8 +14,8 @@ namespace Assets.Code.Initialization
     {
         void Awake()
         {
-            var man = ManagerCollection.Instance.GetManager(Constants.CharacterManagerName);
-            var pl = man.GetPrefabFromType<PlayerBase>();
+            var characterManager = ManagerCollection.Instance.GetManager(Constants.CharacterManagerName);
+            var pl = characterManager.GetPrefabFromType<PlayerBase>();
             pl.Init();
             var pukeManager = ManagerCollection.Instance.GetManager(Constants.PukeManager);
             var pk = pukeManager.GetPrefabFromType<PukeBase>();
@@ -24,6 +24,11 @@ namespace Assets.Code.Initialization
             var fa = fartManager.GetPrefabFromType<FartBase>();
             fa.SourceCharacter = pl;
 
+            
+            var npc = characterManager.GetPrefabFromType<NpcBase>();
+            npc.Init();
+
+            ManagerCollection.Instance.MovementHandler.MoveCharacterContinuous(npc);
 
             ManagerCollection.Instance.MovementHandler.MoveCharacterContinuous(pl);
             ManagerCollection.Instance.ProjectileHandler.CheckForPukeAndFartContinous(pk,fa);

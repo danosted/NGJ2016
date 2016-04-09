@@ -1,13 +1,11 @@
 ﻿using UnityEngine;
-using System.Collections;
-using Assets.Code;
 using Assets.Code.Common.Objects;
+using Assets.Code.PrefabAccess;
 
 namespace Assets.Code.Common.BaseClasses
 {
     public class PlayerBase : CharacterBase
     {
-        public int Money { get; set; }
         
         public Inventory Inventory { get; private set; }
 
@@ -23,7 +21,8 @@ namespace Assets.Code.Common.BaseClasses
             set { _isFarting = value; }
         }
 
-        public float FartSpeedBonus { get; set; }
+        [SerializeField]
+        public float FartSpeedBonus;
 
         public FartMeterBase FartMeter { get; set; }
 
@@ -49,7 +48,8 @@ namespace Assets.Code.Common.BaseClasses
                 MovementDirection *= totalMaxSpeed / MovementDirection.magnitude;
             }
 
-            transform.position += MovementDirection * Time.deltaTime;
+            transform.right = FacingDirection;
+            transform.position += MovementDirection * MovementSpeed * Time.deltaTime;
         }
 
         public override void Init()
@@ -59,6 +59,11 @@ namespace Assets.Code.Common.BaseClasses
             MovementSpeed = 1f;
             MaxSpeed = 6f;
             MovementDecay = .95f;
+            FartMeter =
+                ManagerCollection.Instance.GetManager(Constants.UiManagerName)
+                    .GetPrefabFromType<Canvas>()
+                    .GetComponentInChildren<FartMeterBase>();
+            FartSpeedBonus = 5;
         }
     }
 }
