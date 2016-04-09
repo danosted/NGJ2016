@@ -42,7 +42,7 @@ namespace Assets.Code.Common.BaseClasses
             PercentFull -= Time.deltaTime * DecreaseSpeed;
             if (PercentFull < 0)
             {
-                Poopargeddon = false;
+                StopPoopargeddon();
                 PercentFull = 0;
             }
             Render();
@@ -68,6 +68,13 @@ namespace Assets.Code.Common.BaseClasses
         private void StartPoopargeddon()
         {
             Poopargeddon = true;
+            gameObject.GetComponent<AudioSource>().Play();
+        }
+
+        private void StopPoopargeddon()
+        {
+            Poopargeddon = false;
+            gameObject.GetComponent<AudioSource>().Stop();
         }
     }
 }

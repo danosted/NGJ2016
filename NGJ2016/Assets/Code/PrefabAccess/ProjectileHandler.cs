@@ -63,6 +63,7 @@ namespace Assets.Code.PrefabAccess
                     var oppositeMouseDirection =
                         -(Camera.main.ScreenToWorldPoint(Input.mousePosition) - _fart.transform.position);
                     var pooProjectile = ProjectileManager.GetPrefabFromType<PooBase>();
+                    pooProjectile.GetComponent<AudioSource>().Play();
                     pooProjectile.transform.position = _fart.SourceCharacter.transform.position;
                     pooProjectile.transform.rotation = Quaternion.Euler(0, 0, zDegree);
                     pooProjectile.Direction = oppositeMouseDirection.normalized;
