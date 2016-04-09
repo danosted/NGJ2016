@@ -46,7 +46,7 @@ namespace Assets.Code.Common.BaseClasses
             float hor;
             float vert;
 
-            if (!IsFarting)
+            if (!IsFarting || IsShitting)
             {
 
                 var mousepos = Input.mousePosition;

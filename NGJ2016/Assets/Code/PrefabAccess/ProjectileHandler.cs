@@ -50,14 +50,10 @@ namespace Assets.Code.PrefabAccess
                 }
                 _fart.transform.position = _fart.SourceCharacter.transform.position;
                 //var mouseDirection = -(Camera.main.ScreenToWorldPoint(Input.mousePosition) - _fart.transform.position);
-                var mouseDirection = -_fart.SourceCharacter.MovementDirection;
-                var zDegree = Mathf.Rad2Deg*(Mathf.Atan(mouseDirection.y/mouseDirection.x));
-
-                Debug.DrawLine(_fart.SourceCharacter.transform.position, _fart.transform.position + mouseDirection);
-                Debug.DrawRay(_fart.SourceCharacter.transform.position, mouseDirection);
-
-                _fart.transform.rotation = Quaternion.Euler(0, 0, zDegree);
-                mouseDirection.z = 0;
+                var mouseDirection = -_fart.SourceCharacter.MovementDirection.normalized;
+                var zDegree = Mathf.Rad2Deg * (Mathf.Atan(mouseDirection.y / mouseDirection.x));
+                //_fart.transform.rotation = Quaternion.Euler(0, 0, zDegree);
+                //mouseDirection.z = 0;
                 _fart.transform.Translate(mouseDirection.normalized*_fart.Offset);
 
                 if (_fart.SourceCharacter.IsShitting && _timeSinceLastShit > 0.5f)
@@ -68,7 +64,7 @@ namespace Assets.Code.PrefabAccess
                         -(Camera.main.ScreenToWorldPoint(Input.mousePosition) - _fart.transform.position);
                     var pooProjectile = ProjectileManager.GetPrefabFromType<PooBase>();
                     pooProjectile.GetComponent<AudioSource>().Play();
-                    pooProjectile.transform.position = _fart.SourceCharacter.transform.position;
+                    pooProjectile.transform.position = _fart.SourceCharacter.transform.position - _fart.SourceCharacter.MovementDirection.normalized;
                     pooProjectile.transform.rotation = Quaternion.Euler(0, 0, zDegree);
                     pooProjectile.Direction = oppositeMouseDirection.normalized;
                     _timeSinceLastShit = 0.0f;
