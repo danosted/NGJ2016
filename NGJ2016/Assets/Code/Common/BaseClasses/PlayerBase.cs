@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using Assets.Code.Common.Objects;
 using Assets.Code.PrefabAccess;
 
@@ -33,7 +34,10 @@ namespace Assets.Code.Common.BaseClasses
 
         public override void Move()
         {
-            var mouseDirection = Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position;
+            var mousepos = Input.mousePosition;
+            mousepos.z = 2;
+            var mouseDirection = Camera.main.ScreenToWorldPoint(mousepos) - transform.position;
+            
             if (mouseDirection.magnitude > 1)
             {
                 mouseDirection = mouseDirection.normalized;
@@ -54,8 +58,19 @@ namespace Assets.Code.Common.BaseClasses
             }
 
             transform.right = FacingDirection;
-            transform.position += MovementDirection * MovementSpeed * Time.deltaTime;
-            Camera.current.transform.position = new Vector3() { x = transform.position.x, y = transform.position.y, z = -3 };
+            var newPos = MovementDirection*MovementSpeed*Time.deltaTime;
+            Debug.Log(newPos);
+            if (newPos.magnitude >= 0.95f)
+            {
+                Debug.Log(newPos);
+                Debug.Log(newPos.normalized);
+                newPos = newPos.normalized*0.95f;
+            }
+            transform.position += newPos;
+            if (transform.position != null)
+            {
+                Camera.main.transform.position = new Vector3() { x = transform.position.x, y = transform.position.y, z = -3 };
+            }
         }
 
         public override void Init()
