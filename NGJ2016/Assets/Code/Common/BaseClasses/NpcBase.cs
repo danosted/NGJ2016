@@ -84,9 +84,9 @@ namespace Assets.Code.Common.BaseClasses
 
                         CurrentTagetCell = possibleCells[Random.Range(0, possibleCells.Count)];
 
-                        FacingDirection = CurrentTagetCell.transform.position - transform.position;
-                        MovementDirection = CurrentTagetCell.transform.position * BaseMovementSpeed;
                     }
+                    FacingDirection = CurrentTagetCell.transform.position-transform.position;
+                    MovementDirection = FacingDirection.normalized * BaseMovementSpeed;
                     break;
                 case NpcStrategy.Look:
                     MovementSpeed = 0;

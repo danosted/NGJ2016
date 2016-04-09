@@ -7,7 +7,8 @@ namespace Assets.Code.Common.BaseClasses
 {
     public abstract class CharacterBase : MonoBehaviour
     {
-        public CellBase CurrentTagetCell { get; set; }
+        [SerializeField]
+        public CellBase CurrentTagetCell;
     
         [SerializeField]
         public float BaseMovementSpeed;
