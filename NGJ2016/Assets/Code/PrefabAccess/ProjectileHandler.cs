@@ -13,8 +13,21 @@ namespace Assets.Code.PrefabAccess
     {
         private PukeBase _puke;
         private FartBase _fart;
-        private ManagerBase _projectileManager;
+        public ManagerBase _projectileManager;
+        public ManagerBase ProjectileManager
+        {
+            get
+            {
+                if (_projectileManager == null)
+                {
+                    _projectileManager = ManagerCollection.Instance.GetManager(Constants.PooManager);
+                }
+                return _projectileManager;
+            }
+        }
+
         private float _timeSinceLastShit;
+        
 
         public void CheckForPukeAndFartContinous(PukeBase p, FartBase f)
         {
@@ -62,8 +75,7 @@ namespace Assets.Code.PrefabAccess
                     _fart.transform.position = _fart.SourceCharacter.transform.position;
                     var oppositeMouseDirection =
                         -(Camera.main.ScreenToWorldPoint(Input.mousePosition) - _fart.transform.position);
-                    var pooProjectile =
-                        ManagerCollection.Instance.GetManager(Constants.PooManager).GetPrefabFromType<PooBase>();
+                    var pooProjectile = ProjectileManager.GetPrefabFromType<PooBase>();
                     pooProjectile.transform.position = _fart.SourceCharacter.transform.position;
                     pooProjectile.transform.rotation = Quaternion.Euler(0, 0, zDegree);
                     pooProjectile.Direction = oppositeMouseDirection.normalized;
