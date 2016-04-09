@@ -22,3 +22,4 @@ src/Assets/Standard Assets*
 */obj/
 */bin/
 *.csproj
+*.unity
