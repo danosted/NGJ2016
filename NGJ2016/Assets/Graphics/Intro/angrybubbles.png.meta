@@ -1,9 +1,11 @@
 fileFormatVersion: 2
-guid: 8e78d49144c0d95498f001b015f8ee5b
-timeCreated: 1460204179
+guid: 2a9a819661a77f64d8f9482b0c57d5ce
+timeCreated: 1460241283
 licenseType: Free
 TextureImporter:
-  fileIDToRecycleName: {}
+  fileIDToRecycleName:
+    21300000: angrybubbles_0
+    21300002: angrybubbles_1
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -29,7 +31,7 @@ TextureImporter:
   textureFormat: -1
   maxTextureSize: 2048
   textureSettings:
-    filterMode: 0
+    filterMode: -1
     aniso: 16
     mipBias: -1
     wrapMode: 1
@@ -38,7 +40,7 @@ TextureImporter:
   rGBM: 0
   compressionQuality: 50
   allowsAlphaSplitting: 0
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -49,7 +51,29 @@ TextureImporter:
   textureType: 8
   buildTargetSettings: []
   spriteSheet:
-    sprites: []
+    sprites:
+    - name: angrybubbles_0
+      rect:
+        serializedVersion: 2
+        x: 5
+        y: 17
+        width: 37
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: angrybubbles_1
+      rect:
+        serializedVersion: 2
+        x: 53
+        y: 17
+        width: 37
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
     outline: []
   spritePackingTag: 
   userData: 

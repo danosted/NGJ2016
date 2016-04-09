@@ -1,10 +1,13 @@
 fileFormatVersion: 2
-guid: d9f58ac2ea102e84285d0b2ffaba45ac
-timeCreated: 1460237270
+guid: 1d308a747c993e3489676fc9712ecf83
+timeCreated: 1460240579
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
-    21300000: GoldenToilet_1
+    21300000: Hearts1_0
+    21300002: Hearts1_1
+    21300004: Hearts1_2
+    21300006: Hearts1_4
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -45,19 +48,41 @@ TextureImporter:
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
-  spritePixelsToUnits: 96
+  spritePixelsToUnits: 48
   alphaIsTransparency: 1
   textureType: 8
   buildTargetSettings: []
   spriteSheet:
     sprites:
-    - name: GoldenToilet_1
+    - name: Hearts1_0
       rect:
         serializedVersion: 2
-        x: 11
-        y: 2
-        width: 24
-        height: 39
+        x: 4
+        y: 16
+        width: 40
+        height: 25
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: Hearts1_2
+      rect:
+        serializedVersion: 2
+        x: 56
+        y: 18
+        width: 35
+        height: 26
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: Hearts1_4
+      rect:
+        serializedVersion: 2
+        x: 99
+        y: 20
+        width: 36
+        height: 21
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
