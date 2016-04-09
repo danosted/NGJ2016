@@ -34,11 +34,6 @@ namespace Assets.Code.Common.BaseClasses
 
         private Animator anim;
 
-        private int _moveDownHash;
-        private int _moveUpHash;
-        private int _moveLeftHash;
-        private int _moveRightHash;
-
         public override void Move()
         {
             var mousepos = Input.mousePosition;
@@ -119,7 +114,6 @@ namespace Assets.Code.Common.BaseClasses
             anim.SetBool("MoveUp", false);
             anim.SetBool("MoveRight", false);
             anim.SetBool("MoveLeft", false);
-
         }
 
         public override void Init()
@@ -135,11 +129,6 @@ namespace Assets.Code.Common.BaseClasses
                     .GetComponentInChildren<FartMeterBase>();
             FartSpeedBonus = 3;
             anim = GetComponent<Animator>();
-            _moveDownHash = Animator.StringToHash("Base Layer.MoveDown");
-            _moveUpHash = Animator.StringToHash("Base Layer.MoveUp");
-            _moveRightHash = Animator.StringToHash("Base Layer.MoveRight");
-            _moveLeftHash = Animator.StringToHash("Base Layer.MoveLeft");
-
         }
     }
 }
