@@ -99,7 +99,7 @@ namespace Assets.Code.Common.BaseClasses
             var xMag = Mathf.Abs(mouseDirection.x);
             var yMag = Mathf.Abs(mouseDirection.y);
             ResetAnimatorParams();
-            Debug.Log("xMag " + xMag + " yMag " + yMag);
+            //Debug.Log("xMag " + xMag + " yMag " + yMag);
             if (yMag < xMag)
             {
                 if (mouseDirection.x < 0)
