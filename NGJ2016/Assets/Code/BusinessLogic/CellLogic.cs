@@ -155,7 +155,7 @@ namespace Assets.Code.BusinessLogic
                 heightPrev = height;
                 widthOffsetPrev = widthOffset;
                 heightOffsetPrev = heightOffset;
-                exitDirection = (Compass)Enum.GetValues(typeof(Compass)).GetValue(rnd.Next(4));
+                exitDirection = Compass.East;//(Compass)Enum.GetValues(typeof(Compass)).GetValue(rnd.Next(4));
 
                 if (mapLength == 1)
                 {
@@ -286,7 +286,7 @@ namespace Assets.Code.BusinessLogic
                                         break;
                 case Compass.East:
                     offsetForExit = (Math.Abs(room.height - nextRoomWallSize) / 2) + 1;
-                    i = room.width * rnd.Next(offsetForExit, room.height - offsetForExit) - 1;
+                    i = room.width * (rnd.Next(offsetForExit+1, room.height - offsetForExit)-1) - 1;
                     break;
                 case Compass.West:
                     offsetForExit = (Math.Abs(room.height - nextRoomWallSize) / 2) + 1;
