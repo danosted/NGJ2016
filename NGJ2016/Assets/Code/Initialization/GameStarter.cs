@@ -15,7 +15,7 @@ namespace Assets.Code.Initialization
         void Awake()
         {
             var man = ManagerCollection.Instance.GetManager(Constants.CharacterManagerName);
-            var pl = man.GetPrefabFromType<CharacterBase>();
+            var pl = man.GetPrefabFromType<PlayerBase>();
             pl.Init();
             var pukeManager = ManagerCollection.Instance.GetManager(Constants.PukeManager);
             var pk = pukeManager.GetPrefabFromType<PukeBase>();
