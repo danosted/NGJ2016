@@ -26,7 +26,8 @@ namespace Assets.Code.PrefabAccess
         {
             var isPuking = Input.GetKey(KeyCode.Mouse0);
             var isFarting = Input.GetKey(KeyCode.Mouse1);
-
+            if (_fart == null)
+                return;
             _fart.SourceCharacter.IsFarting = isFarting;
 
             if (isPuking)
