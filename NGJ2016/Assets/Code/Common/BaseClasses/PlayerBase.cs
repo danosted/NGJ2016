@@ -28,7 +28,10 @@ namespace Assets.Code.Common.BaseClasses
 
         public override void Move()
         {
-            var mouseDirection = Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position;
+            var mousepos = Input.mousePosition;
+            mousepos.z = 2;
+            var mouseDirection = Camera.main.ScreenToWorldPoint(mousepos) - transform.position;
+            
             if (mouseDirection.magnitude > 1)
             {
                 mouseDirection = mouseDirection.normalized;

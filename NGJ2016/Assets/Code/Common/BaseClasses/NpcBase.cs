@@ -25,7 +25,7 @@ namespace Assets.Code.Common.BaseClasses
                     MovementSpeed = 1;
                     break;
             }
-
+            transform.forward = FacingDirection;
             transform.position += MovementDirection * MovementSpeed * Time.deltaTime;
         }
 
