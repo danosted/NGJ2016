@@ -1,12 +1,12 @@
 fileFormatVersion: 2
-guid: 2204a4f2d855983438886c29be5ac99c
-timeCreated: 1460207408
+guid: c90528023d59b1945b86f4967bf04344
+timeCreated: 1460222729
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
-    21300000: fartMap_0
-    21300002: fartMap_1
-    21300004: fartMap_2
+    21300000: womanFrontMap_0
+    21300002: womanFrontMap_1
+    21300004: womanFrontMap_2
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -53,60 +53,53 @@ TextureImporter:
   buildTargetSettings: []
   spriteSheet:
     sprites:
-    - name: fartMap_0
+    - name: womanFrontMap_0
       rect:
         serializedVersion: 2
-        x: 1
-        y: 4
-        width: 42
-        height: 40
+        x: 12
+        y: 0
+        width: 23
+        height: 44
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: womanFrontMap_1
+      rect:
+        serializedVersion: 2
+        x: 59
+        y: 0
+        width: 37
+        height: 44
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: -21, y: 20}
-        - {x: -21, y: -20}
-        - {x: 20, y: -20}
-        - {x: 21, y: -18}
-        - {x: 21, y: 16}
-        - {x: 19, y: 20}
-    - name: fartMap_1
-      rect:
-        serializedVersion: 2
-        x: 49
-        y: 4
-        width: 42
-        height: 40
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -18, y: 20}
-        - {x: -21, y: 17}
-        - {x: -21, y: -20}
-        - {x: 21, y: -20}
-        - {x: 21, y: 18}
-        - {x: 15, y: 20}
-    - name: fartMap_2
+      - - {x: -18.5, y: 22}
+        - {x: -18.5, y: -22}
+        - {x: 18.5, y: -22}
+        - {x: 18.5, y: 8}
+        - {x: 9.5, y: 22}
+    - name: womanFrontMap_2
       rect:
         serializedVersion: 2
         x: 99
-        y: 5
-        width: 42
-        height: 40
+        y: 0
+        width: 37
+        height: 44
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: 17, y: 20}
-        - {x: -16, y: 20}
-        - {x: -21, y: 16}
-        - {x: -21, y: -15}
-        - {x: -17, y: -20}
-        - {x: 15, y: -20}
-        - {x: 21, y: -17}
-        - {x: 21, y: 15}
-        - {x: 19, y: 19}
+      - - {x: 15.5, y: 22}
+        - {x: -7.5, y: 22}
+        - {x: -18.5, y: 13}
+        - {x: -18.5, y: -16}
+        - {x: -15.5, y: -22}
+        - {x: 14.5, y: -22}
+        - {x: 16.5, y: -21}
+        - {x: 18.5, y: -17}
+        - {x: 18.5, y: 19}
     outline: []
   spritePackingTag: 
   userData: 

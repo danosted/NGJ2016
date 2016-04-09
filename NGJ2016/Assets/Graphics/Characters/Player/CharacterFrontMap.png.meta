@@ -1,12 +1,12 @@
 fileFormatVersion: 2
-guid: 2204a4f2d855983438886c29be5ac99c
-timeCreated: 1460207408
+guid: ec7b1791c0781a24c85d750e3dff3d4d
+timeCreated: 1460213775
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
-    21300000: fartMap_0
-    21300002: fartMap_1
-    21300004: fartMap_2
+    21300000: CharacterFrontMap_0
+    21300002: CharacterFrontMap_1
+    21300004: CharacterFrontMap_2
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -32,7 +32,7 @@ TextureImporter:
   textureFormat: -1
   maxTextureSize: 2048
   textureSettings:
-    filterMode: 0
+    filterMode: -1
     aniso: 16
     mipBias: -1
     wrapMode: 1
@@ -53,60 +53,63 @@ TextureImporter:
   buildTargetSettings: []
   spriteSheet:
     sprites:
-    - name: fartMap_0
+    - name: CharacterFrontMap_0
       rect:
         serializedVersion: 2
         x: 1
-        y: 4
-        width: 42
-        height: 40
+        y: 0
+        width: 43
+        height: 43
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: -21, y: 20}
-        - {x: -21, y: -20}
-        - {x: 20, y: -20}
-        - {x: 21, y: -18}
-        - {x: 21, y: 16}
-        - {x: 19, y: 20}
-    - name: fartMap_1
+      - - {x: -7.5, y: 21.5}
+        - {x: -21.5, y: 9.5}
+        - {x: -21.5, y: -21.5}
+        - {x: 20.5, y: -21.5}
+        - {x: 21.5, y: -20.5}
+        - {x: 21.5, y: 6.5}
+        - {x: 12.5, y: 21.5}
+    - name: CharacterFrontMap_1
       rect:
         serializedVersion: 2
-        x: 49
-        y: 4
-        width: 42
-        height: 40
+        x: 50
+        y: 0
+        width: 44
+        height: 44
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: -18, y: 20}
-        - {x: -21, y: 17}
-        - {x: -21, y: -20}
-        - {x: 21, y: -20}
-        - {x: 21, y: 18}
-        - {x: 15, y: 20}
-    - name: fartMap_2
+      - - {x: -10, y: 22}
+        - {x: -22, y: 13}
+        - {x: -22, y: -16}
+        - {x: -20, y: -22}
+        - {x: 20, y: -22}
+        - {x: 22, y: -15}
+        - {x: 22, y: 12}
+        - {x: 7, y: 22}
+    - name: CharacterFrontMap_2
       rect:
         serializedVersion: 2
-        x: 99
-        y: 5
-        width: 42
-        height: 40
+        x: 100
+        y: 0
+        width: 43
+        height: 43
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: 17, y: 20}
-        - {x: -16, y: 20}
-        - {x: -21, y: 16}
-        - {x: -21, y: -15}
-        - {x: -17, y: -20}
-        - {x: 15, y: -20}
-        - {x: 21, y: -17}
-        - {x: 21, y: 15}
-        - {x: 19, y: 19}
+      - - {x: 7.5, y: 21.5}
+        - {x: -8.5, y: 21.5}
+        - {x: -21.5, y: 8.5}
+        - {x: -21.5, y: -8.5}
+        - {x: -17.5, y: -14.5}
+        - {x: -11.5, y: -21.5}
+        - {x: 16.5, y: -21.5}
+        - {x: 21.5, y: -16.5}
+        - {x: 21.5, y: 9.5}
     outline: []
   spritePackingTag: 
   userData: 

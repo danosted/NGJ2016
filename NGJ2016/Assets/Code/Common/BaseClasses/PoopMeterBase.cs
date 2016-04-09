@@ -15,14 +15,14 @@ namespace Assets.Code.Common.BaseClasses
         public float IncreaseSpeed { get; set; }
         public float DecreaseSpeed { get; set; }
 
-        public bool OhShitTriggered { get; set; }
+        public bool Poopargeddon { get; set; }
         
         void Awake()
         {
             //OffsetMaxXMin = -600f;
 
-            IncreaseSpeed = 0.15f;
-            DecreaseSpeed = 0.3f;
+            IncreaseSpeed = 0.05f;
+            DecreaseSpeed = 0.15f;
 
             PercentFull = 0.0f;
             var rectTransform = gameObject.GetComponent<RectTransform>();
@@ -42,7 +42,7 @@ namespace Assets.Code.Common.BaseClasses
             PercentFull -= Time.deltaTime * DecreaseSpeed;
             if (PercentFull < 0)
             {
-                OhShitTriggered = false;
+                Poopargeddon = false;
                 PercentFull = 0;
             }
             Render();
@@ -53,7 +53,7 @@ namespace Assets.Code.Common.BaseClasses
             PercentFull += Time.deltaTime * IncreaseSpeed;
             if (PercentFull > 1)
             {
-                OhShit();
+                StartPoopargeddon();
                 PercentFull = 1;
             }
             Render();
@@ -65,9 +65,9 @@ namespace Assets.Code.Common.BaseClasses
             rectTransform.offsetMax = new Vector2(OffsetXMax * PercentFull * 2f, rectTransform.offsetMax.y);
         }
 
-        private void OhShit()
+        private void StartPoopargeddon()
         {
-            OhShitTriggered = true;
+            Poopargeddon = true;
         }
     }
 }

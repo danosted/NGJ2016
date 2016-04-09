@@ -21,8 +21,8 @@ namespace Assets.Code.Common.BaseClasses
         {
             //OffsetMaxXMin = -600f;
 
-            IncreaseSpeed = 0.15f;
-            DecreaseSpeed = 0.3f;
+            IncreaseSpeed = 0.25f;
+            DecreaseSpeed = 1f;
 
             PercentFull = 0.0f;
             var rectTransform = gameObject.GetComponent<RectTransform>();
@@ -63,6 +63,7 @@ namespace Assets.Code.Common.BaseClasses
         {
             var rectTransform = gameObject.GetComponent<RectTransform>();
             rectTransform.offsetMax = new Vector2(OffsetXMax * PercentFull * 2f, rectTransform.offsetMax.y);
+            Debug.Log(rectTransform.offsetMax.x);
         }
 
         private void OhShit()

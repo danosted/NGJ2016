@@ -37,27 +37,10 @@ namespace Assets.Code.PrefabAccess
 
         void Update()
         {
-            var isPuking = Input.GetKey(KeyCode.Mouse0);
-            var isFarting = Input.GetKey(KeyCode.Mouse1);
             if (_fart == null)
                 return;
-            _fart.SourceCharacter.IsFarting = isFarting  && _fart.SourceCharacter.CanFart;
 
-            if (isPuking)
-            {
-                _puke.GetComponent<Renderer>().enabled = true;
-                _puke.transform.position = _puke.SourceCharacter.transform.position;
-                var mouseDirection = Camera.main.ScreenToWorldPoint(Input.mousePosition) - _puke.transform.position;
-                var zDegree = Mathf.Rad2Deg*(Mathf.Atan(mouseDirection.y/mouseDirection.x));
-
-                _puke.transform.rotation = Quaternion.Euler(0, 0, zDegree);
-                mouseDirection.z = 0;
-                Debug.DrawRay(_puke.SourceCharacter.transform.position, mouseDirection);
-                var length = mouseDirection.sqrMagnitude;
-                _puke.transform.Translate(mouseDirection*0.5f);
-                _puke.transform.localScale = new Vector3(length*0.5f, 2, 1);
-            }
-            else if (_fart.SourceCharacter.IsFarting)
+            if (_fart.SourceCharacter.IsFarting || _fart.SourceCharacter.IsShitting)
             {
                 _fart.GetComponent<Renderer>().enabled = true;
                 var audioFart = _fart.GetComponent<AudioSource>();
@@ -71,10 +54,9 @@ namespace Assets.Code.PrefabAccess
 
                 _fart.transform.rotation = Quaternion.Euler(0, 0, zDegree);
                 mouseDirection.z = 0;
-                Debug.DrawRay(_fart.SourceCharacter.transform.position, mouseDirection);
                 _fart.transform.Translate(mouseDirection.normalized*_fart.Offset);
 
-                if (_fart.SourceCharacter.FartMeter.OhShitTriggered && _timeSinceLastShit > 0.5f)
+                if (_fart.SourceCharacter.IsShitting && _timeSinceLastShit > 0.5f)
                 {
                     _fart.GetComponent<Renderer>().enabled = true;
                     _fart.transform.position = _fart.SourceCharacter.transform.position;

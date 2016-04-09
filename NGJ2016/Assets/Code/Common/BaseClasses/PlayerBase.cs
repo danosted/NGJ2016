@@ -7,19 +7,22 @@ namespace Assets.Code.Common.BaseClasses
 {
     public class PlayerBase : CharacterBase
     {
-        
+
         public Inventory Inventory { get; private set; }
 
-        public CellBase CurrentTagetCell { get; set; }
 
         private bool _isFarting;
         public bool IsFarting
         {
             get
             {
-                return FartMeter.OhShitTriggered || _isFarting;
+                return FartMeter.OhShitTriggered;
             }
-            set { _isFarting = value; }
+        }
+
+        public bool IsShitting
+        {
+            get { return PoopMeter.Poopargeddon; }
         }
 
         [SerializeField]
@@ -32,18 +35,36 @@ namespace Assets.Code.Common.BaseClasses
 
         public FartMeterBase FartMeter { get; set; }
 
+        public PoopMeterBase PoopMeter { get; set; }
+
+        private Animator anim;
+
         public override void Move()
         {
-            var mousepos = Input.mousePosition;
-            mousepos.z = 2;
-            var mouseDirection = Camera.main.ScreenToWorldPoint(mousepos) - transform.position;
-            
-            if (mouseDirection.magnitude > 1)
+            float hor;
+            float vert;
+
+            if (!IsFarting)
             {
-                mouseDirection = mouseDirection.normalized;
+
+                var mousepos = Input.mousePosition;
+                mousepos.z = 2;
+                var mouseDirection = Camera.main.ScreenToWorldPoint(mousepos) - transform.position;
+
+                CalcuateAnimation(mouseDirection);
+
+                if (mouseDirection.magnitude > 1)
+                {
+                    mouseDirection = mouseDirection.normalized;
+                }
+                hor = mouseDirection.x;
+                vert = mouseDirection.y;
             }
-            var hor = mouseDirection.x;
-            var vert = mouseDirection.y;
+            else
+            {
+                hor = MovementDirection.x;
+                vert = MovementDirection.y;
+            }
             
             var totalSpeed = IsFarting ? FartSpeedBonus * MovementSpeed : MovementSpeed;
 
@@ -56,9 +77,8 @@ namespace Assets.Code.Common.BaseClasses
             {
                 MovementDirection *= totalMaxSpeed / MovementDirection.magnitude;
             }
-
-            transform.right = FacingDirection;
-            var newPos = MovementDirection*MovementSpeed*Time.deltaTime;
+            
+            var newPos = MovementDirection * MovementSpeed * Time.deltaTime;
             //Debug.Log(newPos);
             //if (newPos.magnitude >= 0.95f)
             //{
@@ -71,6 +91,45 @@ namespace Assets.Code.Common.BaseClasses
             {
                 Camera.main.transform.position = new Vector3() { x = transform.position.x, y = transform.position.y, z = -3 };
             }
+
+        }
+
+        private void CalcuateAnimation(Vector3 mouseDirection)
+        {
+            var xMag = Mathf.Abs(mouseDirection.x);
+            var yMag = Mathf.Abs(mouseDirection.y);
+            ResetAnimatorParams();
+            Debug.Log("xMag " + xMag + " yMag " + yMag);
+            if (yMag < xMag)
+            {
+                if (mouseDirection.x < 0)
+                {
+                    anim.SetBool("MoveLeft", true);
+                }
+                else if (0 < mouseDirection.x)
+                {
+                    anim.SetBool("MoveRight", true);
+                }
+            }
+            else
+            {
+                if (mouseDirection.y < 0)
+                {
+                    anim.SetBool("MoveDown", true);
+                }
+                else if (0 < mouseDirection.y)
+                {
+                    anim.SetBool("MoveUp", true);
+                }
+            }
+        }
+
+        private void ResetAnimatorParams()
+        {
+            anim.SetBool("MoveDown", false);
+            anim.SetBool("MoveUp", false);
+            anim.SetBool("MoveRight", false);
+            anim.SetBool("MoveLeft", false);
         }
 
         public override void Init()
@@ -80,11 +139,12 @@ namespace Assets.Code.Common.BaseClasses
             MovementSpeed = 1f;
             MaxSpeed = 3f;
             MovementDecay = .95f;
-            FartMeter =
-                ManagerCollection.Instance.GetManager(Constants.UiManagerName)
-                    .GetPrefabFromType<Canvas>()
-                    .GetComponentInChildren<FartMeterBase>();
+            var canvas = ManagerCollection.Instance.GetManager(Constants.UiManagerName).GetPrefabFromType<Canvas>();
+            FartMeter = canvas.GetComponentInChildren<FartMeterBase>();
+            PoopMeter = canvas.GetComponentInChildren<PoopMeterBase>();
             FartSpeedBonus = 2.5f;
+            transform.position = new Vector3(1,1);
+            anim = GetComponent<Animator>();
         }
     }
 }

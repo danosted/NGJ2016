@@ -8,6 +8,9 @@ namespace Assets.Code.Common.BaseClasses
     public abstract class CharacterBase : MonoBehaviour
     {
         [SerializeField]
+        public CellBase CurrentTagetCell;
+    
+        [SerializeField]
         public float BaseMovementSpeed;
 
         [SerializeField]
