@@ -10,6 +10,7 @@ namespace Assets.Code.Common.BaseClasses
 
         public Inventory Inventory { get; private set; }
 
+        public string winText;
 
         private bool _isFarting;
         public bool IsFarting
@@ -148,6 +149,16 @@ namespace Assets.Code.Common.BaseClasses
             FartSpeedBonus = 2.5f;
             transform.position = new Vector3(1,1);
             anim = GetComponent<Animator>();
+        }
+
+        public void OnCollisionEnter2D(Collision2D coll)
+        {
+            var toilet = coll.gameObject.GetComponent<ToiletBase>();
+            if (toilet != null)
+            {
+                winText = "Let it riiiiiiipppp!!!";
+
+            }
         }
     }
 }
