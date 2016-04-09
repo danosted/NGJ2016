@@ -16,7 +16,7 @@ namespace Assets.Code.Common.BaseClasses
         {
             get
             {
-                return FartMeter.OhShitTriggered;
+                return FartMeter.OhShitTriggered || IsShitting;
             }
         }
 
@@ -36,6 +36,8 @@ namespace Assets.Code.Common.BaseClasses
         public FartMeterBase FartMeter { get; set; }
 
         public PoopMeterBase PoopMeter { get; set; }
+
+        public DisgraceMeterBase DisgraceMeter { get; set; }
 
         private Animator anim;
 
@@ -142,6 +144,7 @@ namespace Assets.Code.Common.BaseClasses
             var canvas = ManagerCollection.Instance.GetManager(Constants.UiManagerName).GetPrefabFromType<Canvas>();
             FartMeter = canvas.GetComponentInChildren<FartMeterBase>();
             PoopMeter = canvas.GetComponentInChildren<PoopMeterBase>();
+            DisgraceMeter = canvas.GetComponentInChildren<DisgraceMeterBase>();
             FartSpeedBonus = 2.5f;
             transform.position = new Vector3(1,1);
             anim = GetComponent<Animator>();

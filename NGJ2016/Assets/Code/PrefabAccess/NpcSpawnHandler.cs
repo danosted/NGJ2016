@@ -25,6 +25,10 @@ namespace Assets.Code.PrefabAccess
             }
         }
 
+        private int numBosses = 0;
+
+        private int numWomen = 0;
+
         private ManagerBase _characterManager;
         
         public ManagerBase CharacterManager
@@ -58,12 +62,23 @@ namespace Assets.Code.PrefabAccess
         public NpcSpawnHandler()
         {
             _spawnRate = 0.1f;
-            _maxNpcs = 20;
+            _maxNpcs = 40;
         }
 
         public void SpawnNpc()
         {
-            var npc = CharacterManager.GetPrefabFromType<NpcBase>();
+            NpcBase npc;
+            if (numWomen == 0 || numBosses/(float) numWomen > 0.8)
+            {
+                npc = CharacterManager.GetPrefabFromType<WomanBase>();
+                numWomen++;
+            }
+            else
+            {
+                npc = CharacterManager.GetPrefabFromType<BossBase>();
+                numBosses++;
+            }
+
             npc.Init();
             var activeCells = CellManager.GetAllActiveObjects<CellBase>().Where(c => c.Wall == null).ToList();
             var cellPosition = activeCells[Random.Range(0, activeCells.Count)].transform.position;
