@@ -14,14 +14,18 @@ namespace Assets.Code.PrefabAccess
 
         void Update()
         {
-
-            if (_character.IsFarting)
+            if (_character.IsShitting)
+            {
+                _character.PoopMeter.DecreaseMeter();
+            } 
+            else if (_character.IsFarting)
             {
                 _character.FartMeter.DecreaseMeter();
             }
             else
             {
                 _character.FartMeter.IncreaseMeter();
+                _character.PoopMeter.IncreaseMeter();
             }
         }
     }

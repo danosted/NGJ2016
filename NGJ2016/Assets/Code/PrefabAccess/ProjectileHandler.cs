@@ -26,7 +26,6 @@ namespace Assets.Code.PrefabAccess
             }
         }
 
-        
         private float _timeSinceLastShit;
         
 
@@ -38,41 +37,26 @@ namespace Assets.Code.PrefabAccess
 
         void Update()
         {
-            var isPuking = Input.GetKey(KeyCode.Mouse0);
-            var isFarting = Input.GetKey(KeyCode.Mouse1);
             if (_fart == null)
                 return;
-            _fart.SourceCharacter.IsFarting = isFarting  && _fart.SourceCharacter.CanFart;
 
-            if (isPuking)
-            {
-                var mouseDirection = -_fart.SourceCharacter.MovementDirection;
-                var zDegree = Mathf.Rad2Deg * (Mathf.Atan(mouseDirection.y / mouseDirection.x));
-
-                _fart.GetComponent<Renderer>().enabled = true;
-                _fart.transform.position = _fart.SourceCharacter.transform.position;
-                var oppositeMouseDirection =
-                    -(Camera.main.ScreenToWorldPoint(Input.mousePosition) - _fart.transform.position);
-                var pooProjectile = ProjectileManager.GetPrefabFromType<PooBase>();
-                pooProjectile.transform.position = _fart.SourceCharacter.transform.position;
-                pooProjectile.transform.rotation = Quaternion.Euler(0, 0, zDegree);
-                pooProjectile.Direction = oppositeMouseDirection.normalized;
-                _timeSinceLastShit = 0.0f;
-            }
-            else if (_fart.SourceCharacter.IsFarting)
+            if (_fart.SourceCharacter.IsFarting || _fart.SourceCharacter.IsShitting)
             {
                 _fart.GetComponent<Renderer>().enabled = true;
+                var audioFart = _fart.GetComponent<AudioSource>();
+                if (!audioFart.isPlaying)
+                {
+                    audioFart.Play();
+                }
                 _fart.transform.position = _fart.SourceCharacter.transform.position;
-                //var mouseDirection = -(Camera.main.ScreenToWorldPoint(Input.mousePosition) - _fart.transform.position);
-                var mouseDirection = -_fart.SourceCharacter.MovementDirection;
+                var mouseDirection = -(Camera.main.ScreenToWorldPoint(Input.mousePosition) - _fart.transform.position);
                 var zDegree = Mathf.Rad2Deg*(Mathf.Atan(mouseDirection.y/mouseDirection.x));
 
                 _fart.transform.rotation = Quaternion.Euler(0, 0, zDegree);
                 mouseDirection.z = 0;
-                Debug.DrawRay(_fart.SourceCharacter.transform.position, mouseDirection);
                 _fart.transform.Translate(mouseDirection.normalized*_fart.Offset);
 
-                if (_fart.SourceCharacter.FartMeter.OhShitTriggered && _timeSinceLastShit > 0.5f)
+                if (_fart.SourceCharacter.IsShitting && _timeSinceLastShit > 0.5f)
                 {
                     _fart.GetComponent<Renderer>().enabled = true;
                     _fart.transform.position = _fart.SourceCharacter.transform.position;
@@ -91,6 +75,8 @@ namespace Assets.Code.PrefabAccess
             }
             else
             {
+                var audioFart = _fart.GetComponent<AudioSource>();
+                audioFart.Stop();
                 _puke.GetComponent<Renderer>().enabled = false;
                 _fart.GetComponent<Renderer>().enabled = false;
             }
