@@ -13,8 +13,7 @@ namespace Assets.Code.Common.BaseClasses
 
         public Inventory Inventory { get; private set; }
 
-        public string winText;
-
+        private Canvas canvas;
         private bool _isFarting;
         public bool IsFarting
         {
@@ -145,7 +144,7 @@ namespace Assets.Code.Common.BaseClasses
             MovementSpeed = 1f;
             MaxSpeed = 3f;
             MovementDecay = .95f;
-            var canvas = GameObject.Find("Canvas").GetComponent<Canvas>();
+            canvas = GameObject.Find("Canvas").GetComponent<Canvas>();
             FartMeter = canvas.GetComponentInChildren<FartMeterBase>();
             PoopMeter = canvas.GetComponentInChildren<PoopMeterBase>();
             DisgraceMeter = canvas.GetComponentInChildren<DisgraceMeterBase>();
@@ -159,7 +158,8 @@ namespace Assets.Code.Common.BaseClasses
             var toilet = coll.gameObject.GetComponent<ToiletBase>();
             if (toilet != null)
             {
-                winText = "Let it riiiiiiipppp!!!";
+                var winText = canvas.GetComponentInChildren<UnityEngine.UI.Text>();
+                winText.text = "Let it riiiiiiipppp!!!";
 
             }
         }
