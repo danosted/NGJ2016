@@ -1,12 +1,12 @@
 fileFormatVersion: 2
-guid: 2204a4f2d855983438886c29be5ac99c
-timeCreated: 1460207408
+guid: 651122c099fcbe34d895ec24d02c3023
+timeCreated: 1460227662
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
-    21300000: fartMap_0
-    21300002: fartMap_1
-    21300004: fartMap_2
+    21300000: BossFrontMap_0
+    21300002: BossFrontMap_1
+    21300004: BossFrontMap_2
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -32,7 +32,7 @@ TextureImporter:
   textureFormat: -1
   maxTextureSize: 2048
   textureSettings:
-    filterMode: 0
+    filterMode: -1
     aniso: 16
     mipBias: -1
     wrapMode: 1
@@ -53,60 +53,39 @@ TextureImporter:
   buildTargetSettings: []
   spriteSheet:
     sprites:
-    - name: fartMap_0
+    - name: BossFrontMap_0
       rect:
         serializedVersion: 2
-        x: 1
-        y: 4
-        width: 42
-        height: 40
+        x: 12
+        y: 1
+        width: 21
+        height: 47
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -21, y: 20}
-        - {x: -21, y: -20}
-        - {x: 20, y: -20}
-        - {x: 21, y: -18}
-        - {x: 21, y: 16}
-        - {x: 19, y: 20}
-    - name: fartMap_1
+      outline: []
+    - name: BossFrontMap_1
       rect:
         serializedVersion: 2
-        x: 49
-        y: 4
-        width: 42
-        height: 40
+        x: 57
+        y: 1
+        width: 27
+        height: 47
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -18, y: 20}
-        - {x: -21, y: 17}
-        - {x: -21, y: -20}
-        - {x: 21, y: -20}
-        - {x: 21, y: 18}
-        - {x: 15, y: 20}
-    - name: fartMap_2
+      outline: []
+    - name: BossFrontMap_2
       rect:
         serializedVersion: 2
-        x: 99
-        y: 5
-        width: 42
-        height: 40
+        x: 107
+        y: 1
+        width: 27
+        height: 47
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: 17, y: 20}
-        - {x: -16, y: 20}
-        - {x: -21, y: 16}
-        - {x: -21, y: -15}
-        - {x: -17, y: -20}
-        - {x: 15, y: -20}
-        - {x: 21, y: -17}
-        - {x: 21, y: 15}
-        - {x: 19, y: 19}
+      outline: []
     outline: []
   spritePackingTag: 
   userData: 

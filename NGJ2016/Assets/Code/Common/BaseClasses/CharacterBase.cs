@@ -8,6 +8,9 @@ namespace Assets.Code.Common.BaseClasses
     public abstract class CharacterBase : MonoBehaviour
     {
         [SerializeField]
+        public CellBase CurrentTagetCell;
+    
+        [SerializeField]
         public float BaseMovementSpeed;
 
         [SerializeField]
@@ -35,8 +38,8 @@ namespace Assets.Code.Common.BaseClasses
 
         public virtual void Init()
         {
-            BaseMovementSpeed = 0.5f;
-            MaxSpeed = 6f;
+            BaseMovementSpeed = 0.25f;
+            MaxSpeed = 4f;
             MovementDecay = .95f;
         }
     }

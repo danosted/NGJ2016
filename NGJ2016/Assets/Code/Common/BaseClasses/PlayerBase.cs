@@ -10,16 +10,19 @@ namespace Assets.Code.Common.BaseClasses
 
         public Inventory Inventory { get; private set; }
 
-        public CellBase CurrentTagetCell { get; set; }
 
         private bool _isFarting;
         public bool IsFarting
         {
             get
             {
-                return FartMeter.OhShitTriggered || _isFarting;
+                return FartMeter.OhShitTriggered;
             }
-            set { _isFarting = value; }
+        }
+
+        public bool IsShitting
+        {
+            get { return PoopMeter.Poopargeddon; }
         }
 
         [SerializeField]
@@ -32,28 +35,37 @@ namespace Assets.Code.Common.BaseClasses
 
         public FartMeterBase FartMeter { get; set; }
 
-        private Animator anim;
+        public PoopMeterBase PoopMeter { get; set; }
 
-        private int _moveDownHash;
-        private int _moveUpHash;
-        private int _moveLeftHash;
-        private int _moveRightHash;
+        private Animator anim;
 
         public override void Move()
         {
-            var mousepos = Input.mousePosition;
-            mousepos.z = 2;
-            var mouseDirection = Camera.main.ScreenToWorldPoint(mousepos) - transform.position;
-            
-            CalcuateAnimation(mouseDirection);
+            float hor;
+            float vert;
 
-            if (mouseDirection.magnitude > 1)
+            if (!IsFarting)
             {
-                mouseDirection = mouseDirection.normalized;
-            }
-            var hor = mouseDirection.x;
-            var vert = mouseDirection.y;
 
+                var mousepos = Input.mousePosition;
+                mousepos.z = 2;
+                var mouseDirection = Camera.main.ScreenToWorldPoint(mousepos) - transform.position;
+
+                CalcuateAnimation(mouseDirection);
+
+                if (mouseDirection.magnitude > 1)
+                {
+                    mouseDirection = mouseDirection.normalized;
+                }
+                hor = mouseDirection.x;
+                vert = mouseDirection.y;
+            }
+            else
+            {
+                hor = MovementDirection.x;
+                vert = MovementDirection.y;
+            }
+            
             var totalSpeed = IsFarting ? FartSpeedBonus * MovementSpeed : MovementSpeed;
 
             var direction = new Vector3(totalSpeed * hor, totalSpeed * vert, 0f);
@@ -65,8 +77,7 @@ namespace Assets.Code.Common.BaseClasses
             {
                 MovementDirection *= totalMaxSpeed / MovementDirection.magnitude;
             }
-
-            transform.right = FacingDirection;
+            
             var newPos = MovementDirection * MovementSpeed * Time.deltaTime;
             //Debug.Log(newPos);
             //if (newPos.magnitude >= 0.95f)
@@ -119,27 +130,21 @@ namespace Assets.Code.Common.BaseClasses
             anim.SetBool("MoveUp", false);
             anim.SetBool("MoveRight", false);
             anim.SetBool("MoveLeft", false);
-
         }
 
         public override void Init()
         {
             this.Inventory = new Inventory();
-            BaseMovementSpeed = 0.5f;
+            BaseMovementSpeed = 0.25f;
             MovementSpeed = 1f;
-            MaxSpeed = 6f;
+            MaxSpeed = 3f;
             MovementDecay = .95f;
-            FartMeter =
-                ManagerCollection.Instance.GetManager(Constants.UiManagerName)
-                    .GetPrefabFromType<Canvas>()
-                    .GetComponentInChildren<FartMeterBase>();
-            FartSpeedBonus = 3;
+            var canvas = ManagerCollection.Instance.GetManager(Constants.UiManagerName).GetPrefabFromType<Canvas>();
+            FartMeter = canvas.GetComponentInChildren<FartMeterBase>();
+            PoopMeter = canvas.GetComponentInChildren<PoopMeterBase>();
+            FartSpeedBonus = 2.5f;
+            transform.position = new Vector3(1,1);
             anim = GetComponent<Animator>();
-            _moveDownHash = Animator.StringToHash("Base Layer.MoveDown");
-            _moveUpHash = Animator.StringToHash("Base Layer.MoveUp");
-            _moveRightHash = Animator.StringToHash("Base Layer.MoveRight");
-            _moveLeftHash = Animator.StringToHash("Base Layer.MoveLeft");
-
         }
     }
 }

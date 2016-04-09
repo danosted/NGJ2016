@@ -1,12 +1,10 @@
 fileFormatVersion: 2
-guid: 2204a4f2d855983438886c29be5ac99c
-timeCreated: 1460207408
+guid: 7b551b47e4420db4495c24b212a20dc0
+timeCreated: 1460228851
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
-    21300000: fartMap_0
-    21300002: fartMap_1
-    21300004: fartMap_2
+    21300000: trashbinEmpty_0
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -53,60 +51,17 @@ TextureImporter:
   buildTargetSettings: []
   spriteSheet:
     sprites:
-    - name: fartMap_0
+    - name: trashbinEmpty_0
       rect:
         serializedVersion: 2
-        x: 1
-        y: 4
-        width: 42
-        height: 40
+        x: 12
+        y: 15
+        width: 17
+        height: 15
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -21, y: 20}
-        - {x: -21, y: -20}
-        - {x: 20, y: -20}
-        - {x: 21, y: -18}
-        - {x: 21, y: 16}
-        - {x: 19, y: 20}
-    - name: fartMap_1
-      rect:
-        serializedVersion: 2
-        x: 49
-        y: 4
-        width: 42
-        height: 40
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -18, y: 20}
-        - {x: -21, y: 17}
-        - {x: -21, y: -20}
-        - {x: 21, y: -20}
-        - {x: 21, y: 18}
-        - {x: 15, y: 20}
-    - name: fartMap_2
-      rect:
-        serializedVersion: 2
-        x: 99
-        y: 5
-        width: 42
-        height: 40
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: 17, y: 20}
-        - {x: -16, y: 20}
-        - {x: -21, y: 16}
-        - {x: -21, y: -15}
-        - {x: -17, y: -20}
-        - {x: 15, y: -20}
-        - {x: 21, y: -17}
-        - {x: 21, y: 15}
-        - {x: 19, y: 19}
+      outline: []
     outline: []
   spritePackingTag: 
   userData: 
