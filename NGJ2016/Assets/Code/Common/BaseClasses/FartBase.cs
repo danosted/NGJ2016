@@ -7,7 +7,7 @@ namespace Assets.Code.Common.BaseClasses
 {
     public class FartBase : MonoBehaviour
     {
-        public CharacterBase SourceCharacter { get; set; }
+        public PlayerBase SourceCharacter { get; set; }
 
         public float Offset { get; set; }
 

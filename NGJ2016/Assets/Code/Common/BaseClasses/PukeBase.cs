@@ -9,7 +9,7 @@ namespace Assets.Code.Common.BaseClasses
     {
         public float Range { get; set; }
 
-        public CharacterBase SourceCharacter { get; set; }
+        public PlayerBase SourceCharacter { get; set; }
 
 
     }
