@@ -2,6 +2,9 @@
 using UnityEngine;
 using Assets.Code.Common.Objects;
 using Assets.Code.PrefabAccess;
+using UnityEditor;
+using UnityEditor.SceneManagement;
+using UnityEngine.SceneManagement;
 
 namespace Assets.Code.Common.BaseClasses
 {
@@ -142,7 +145,7 @@ namespace Assets.Code.Common.BaseClasses
             MovementSpeed = 1f;
             MaxSpeed = 3f;
             MovementDecay = .95f;
-            var canvas = ManagerCollection.Instance.GetManager(Constants.UiManagerName).GetPrefabFromType<Canvas>();
+            var canvas = GameObject.Find("Canvas").GetComponent<Canvas>();
             FartMeter = canvas.GetComponentInChildren<FartMeterBase>();
             PoopMeter = canvas.GetComponentInChildren<PoopMeterBase>();
             DisgraceMeter = canvas.GetComponentInChildren<DisgraceMeterBase>();

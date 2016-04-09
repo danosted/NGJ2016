@@ -64,8 +64,15 @@ namespace Assets.Code.Common.BaseClasses
 
         public override void Panic()
         {
+            if (Strategy != NpcStrategy.Panic)
+            {
+                Player.DisgraceMeter.PercentFull -= 0.1f;
+                Player.DisgraceMeter.Render();
+            }
             Strategy = NpcStrategy.Panic;
             gameObject.GetComponent<SpriteRenderer>().color = Color.red;
+            var sound = gameObject.GetComponents<AudioSource>();
+            sound[Random.Range(0,sound.Length)].Play();
         }
 
         public void UnPanic()
