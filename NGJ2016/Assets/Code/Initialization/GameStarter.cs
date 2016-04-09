@@ -27,6 +27,7 @@ namespace Assets.Code.Initialization
 
             ManagerCollection.Instance.MovementHandler.MoveCharacterContinuous(pl);
             ManagerCollection.Instance.ProjectileHandler.CheckForPukeAndFartContinous(pk,fa);
+            ManagerCollection.Instance.UIHandler.SetCharacter(pl);
 
             LogicCollection.Instance.CellLogic.CreateStandardCellGrid(3, 3);
             var cells = ManagerCollection.Instance.GetManager(Constants.CellManagerName).GetAllActiveObjects<CellBase>();

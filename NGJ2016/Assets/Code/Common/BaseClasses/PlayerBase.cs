@@ -22,14 +22,19 @@ namespace Assets.Code.Common.BaseClasses
             }
             var hor = mouseDirection.x;
             var vert = mouseDirection.y;
+            
+            var totalSpeed = IsFarting ? FartSpeedBonus * MovementSpeed : MovementSpeed;
 
-            var direction = new Vector3(BaseMovementSpeed * hor, BaseMovementSpeed * vert, 0f);
+            var direction = new Vector3(totalSpeed * hor, totalSpeed * vert, 0f);
             MovementDirection += direction;
             MovementDirection *= MovementDecay;
-            if (MovementDirection.magnitude > MaxSpeed)
+            var totalMaxSpeed = IsFarting ? FartSpeedBonus * MaxSpeed : MaxSpeed;
+            if (MovementDirection.magnitude > totalMaxSpeed)
             {
-                MovementDirection *= MaxSpeed / MovementDirection.magnitude;
+                MovementDirection *= totalMaxSpeed / MovementDirection.magnitude;
             }
+
+            transform.position += MovementDirection * Time.deltaTime;
         }
 
         public override void Init()

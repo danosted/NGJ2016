@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+﻿﻿using UnityEngine;
 using System.Collections;
 using Assets.Code;
 using Assets.Code.Common.Objects;
@@ -23,6 +23,22 @@ namespace Assets.Code.Common.BaseClasses
         public float Health { get; set; }
         
         public float Energy { get; set; }
+
+        public int Money { get; set; }
+
+        private bool _isFarting;
+        public bool IsFarting
+        {
+            get
+            {
+                return FartMeter.OhShitTriggered || _isFarting;
+            }
+            set { _isFarting = value; }
+        }
+
+        public float FartSpeedBonus { get; set; }
+
+        public FartMeterBase FartMeter { get; set; }
 
         public Vector2 Position2D { get; private set; }
 

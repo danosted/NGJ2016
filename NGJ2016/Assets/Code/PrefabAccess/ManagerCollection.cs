@@ -69,5 +69,20 @@
                 return _projectileHandler;
             }
         }
+
+        private UIHandler _uiHandler;
+        public UIHandler UIHandler
+        {
+            get
+            {
+                if (_uiHandler == null)
+                {
+                    var prefab = Resources.Load(Constants.UiHandlerName);
+                    var GO = (GameObject.Instantiate(prefab)) as GameObject;
+                    _uiHandler = GO.GetComponent<UIHandler>();
+                }
+                return _uiHandler;
+            }
+        }
     }
 }
