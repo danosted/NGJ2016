@@ -32,6 +32,8 @@ namespace Assets.Code.PrefabAccess
 
                 c.Move();
 
+
+                
             }
             var deltaSeconds = (int)(Time.deltaTime * 1000);
         }

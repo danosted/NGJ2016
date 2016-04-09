@@ -55,6 +55,7 @@ namespace Assets.Code.Common.BaseClasses
 
             transform.right = FacingDirection;
             transform.position += MovementDirection * MovementSpeed * Time.deltaTime;
+            Camera.current.transform.position = new Vector3() { x = transform.position.x, y = transform.position.y, z = -3 };
         }
 
         public override void Init()
