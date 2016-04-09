@@ -140,7 +140,7 @@ namespace Assets.Code.Common.BaseClasses
         public override void Init()
         {
             this.Inventory = new Inventory();
-            BaseMovementSpeed = 0.25f;
+            BaseMovementSpeed = 0.20f;
             MovementSpeed = 1f;
             MaxSpeed = 3f;
             MovementDecay = .95f;
