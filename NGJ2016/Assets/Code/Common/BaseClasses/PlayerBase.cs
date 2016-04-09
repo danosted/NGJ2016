@@ -16,9 +16,13 @@ namespace Assets.Code.Common.BaseClasses
         {
             get
             {
-                return FartMeter.OhShitTriggered || _isFarting;
+                return FartMeter.OhShitTriggered;
             }
-            set { _isFarting = value; }
+        }
+
+        public bool IsShitting
+        {
+            get { return PoopMeter.Poopargeddon; }
         }
 
         [SerializeField]
@@ -30,6 +34,8 @@ namespace Assets.Code.Common.BaseClasses
         }
 
         public FartMeterBase FartMeter { get; set; }
+
+        public PoopMeterBase PoopMeter { get; set; }
 
         private Animator anim;
 
@@ -129,15 +135,14 @@ namespace Assets.Code.Common.BaseClasses
         public override void Init()
         {
             this.Inventory = new Inventory();
-            BaseMovementSpeed = 0.5f;
+            BaseMovementSpeed = 0.25f;
             MovementSpeed = 1f;
-            MaxSpeed = 6f;
+            MaxSpeed = 3f;
             MovementDecay = .95f;
-            FartMeter =
-                ManagerCollection.Instance.GetManager(Constants.UiManagerName)
-                    .GetPrefabFromType<Canvas>()
-                    .GetComponentInChildren<FartMeterBase>();
-            FartSpeedBonus = 3;
+            var canvas = ManagerCollection.Instance.GetManager(Constants.UiManagerName).GetPrefabFromType<Canvas>();
+            FartMeter = canvas.GetComponentInChildren<FartMeterBase>();
+            PoopMeter = canvas.GetComponentInChildren<PoopMeterBase>();
+            FartSpeedBonus = 2.5f;
             transform.position = new Vector3(1,1);
             anim = GetComponent<Animator>();
         }
