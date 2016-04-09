@@ -24,11 +24,6 @@ namespace Assets.Code.Initialization
             var fa = fartManager.GetPrefabFromType<FartBase>();
             fa.SourceCharacter = pl;
 
-            
-            var npc = characterManager.GetPrefabFromType<NpcBase>();
-            npc.Init();
-
-            ManagerCollection.Instance.MovementHandler.MoveCharacterContinuous(npc);
 
             ManagerCollection.Instance.MovementHandler.MoveCharacterContinuous(pl);
             ManagerCollection.Instance.ProjectileHandler.CheckForPukeAndFartContinous(pk,fa);
@@ -36,7 +31,9 @@ namespace Assets.Code.Initialization
             LogicCollection.Instance.CellLogic.CreateMap();
             ManagerCollection.Instance.UIHandler.SetCharacter(pl);
 
-            
+            ManagerCollection.Instance.NpcSpawnHandler.SpawnNpc();
+
+
             //var cells = ManagerCollection.Instance.GetManager(Constants.CellManagerName).GetAllActiveObjects<CellBase>();
             //cells[2].Supply = ManagerCollection.Instance.GetManager(Constants.SupplyManagerName).GetPrefabFromType<SupplyBase>();
             //cells[2].Supply.transform.position = cells[2].transform.position; 

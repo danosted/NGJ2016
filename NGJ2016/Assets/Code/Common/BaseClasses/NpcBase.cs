@@ -1,15 +1,19 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using System.Collections;
 using System.Linq;
 using Assets.Code;
 using Assets.Code.Common.Objects;
 using Assets.Code.Common.Enums;
 using Assets.Code.PrefabAccess;
+using UnityEditor;
 
 namespace Assets.Code.Common.BaseClasses
 {
     public class NpcBase : CharacterBase
     {
+        public Guid Id;
+
         public override void Move()
         {
             switch (Strategy)
@@ -25,7 +29,7 @@ namespace Assets.Code.Common.BaseClasses
                     MovementSpeed = 1;
                     break;
             }
-            transform.forward = FacingDirection;
+            transform.right = FacingDirection;
             transform.position += MovementDirection * MovementSpeed * Time.deltaTime;
         }
 
@@ -34,6 +38,7 @@ namespace Assets.Code.Common.BaseClasses
 
         public override void Init()
         {
+            Id = new Guid();
             Strategy = NpcStrategy.Look;
             BaseMovementSpeed = 0.5f;
             MaxSpeed = 6f;

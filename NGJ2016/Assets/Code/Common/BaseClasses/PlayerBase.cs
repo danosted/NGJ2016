@@ -59,13 +59,13 @@ namespace Assets.Code.Common.BaseClasses
 
             transform.right = FacingDirection;
             var newPos = MovementDirection*MovementSpeed*Time.deltaTime;
-            Debug.Log(newPos);
-            if (newPos.magnitude >= 0.95f)
-            {
-                Debug.Log(newPos);
-                Debug.Log(newPos.normalized);
-                newPos = newPos.normalized*0.95f;
-            }
+            //Debug.Log(newPos);
+            //if (newPos.magnitude >= 0.95f)
+            //{
+            //    Debug.Log(newPos);
+            //    Debug.Log(newPos.normalized);
+            //    newPos = newPos.normalized*0.95f;
+            //}
             transform.position += newPos;
             if (transform.position != null)
             {
