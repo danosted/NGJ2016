@@ -15,7 +15,7 @@
    version="1.1"
    inkscape:version="0.48.5 r10040"
    sodipodi:docname="BossMan.svg"
-   inkscape:export-filename="C:\UnityProjects\Github\NGJ2016\InkScape\Office\People\womanFrontMap.png"
+   inkscape:export-filename="C:\UnityProjects\Github\NGJ2016\InkScape\Office\People\BossFrontMap.png"
    inkscape:export-xdpi="90"
    inkscape:export-ydpi="90">
   <defs
@@ -60,7 +60,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title />
+        <dc:title></dc:title>
       </cc:Work>
     </rdf:RDF>
   </metadata>
