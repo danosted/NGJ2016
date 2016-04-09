@@ -21,7 +21,7 @@ namespace Assets.Code.BusinessLogic
         #region Constructor
         public ManagerBase CellManager { get; private set; }
         //public List<CellBase> cells;
-        private enum Compass
+        public enum Compass
         {
             North = 1,
             East = 2,
@@ -111,18 +111,56 @@ namespace Assets.Code.BusinessLogic
 
         public void CreateMap()
         {
-            // Random Generator
+            var mapLength = 4;
             var rnd = new System.Random();
             var width = rnd.Next(20, 30);
             var height = rnd.Next(10, 20);
-            var a = CreateRandomRoom(width, height, rnd.Next(5, 10), rnd.Next(5, 10));
-            CreateDoorWay(a);
-            var b = CreateRandomRoom(rnd.Next(20, 30), rnd.Next(10, 20), rnd.Next(5, 10), rnd.Next(5, 10), width, height);
-            CreateDoorWay(b);
+            var widthPrev = 0;
+            var heightPrev = 0;
+            
+            var widthOffset = 0;
+            var heightOffset = 0;
 
+
+            var a = CreateRandomRoom(width, height, rnd.Next(5, 10), rnd.Next(5, 10));
+            var exitDirection = CreateRandomExit(a);
+            for (int i = 0; i < mapLength; i++)
+            {
+                widthPrev = width;
+                heightPrev = height;
+                switch (exitDirection)
+                {
+                    case Compass.North:
+                        width = rnd.Next(20, 30);
+                        height = rnd.Next(10, 20);
+                        widthOffset += (int)Math.Round((widthPrev - width) / 2.0);
+                        heightOffset += heightPrev;
+                        break;
+                    case Compass.South:
+                        width = rnd.Next(20, 30);
+                        height = rnd.Next(10, 20);
+                        widthOffset += (int)Math.Round((widthPrev - width) / 2.0);
+                        heightOffset += -height;
+                        break;
+                    case Compass.West:
+                        width = rnd.Next(20, 30);
+                        height = rnd.Next(10, 20);
+                        widthOffset += -width;
+                        heightOffset += (int)Math.Round((heightPrev - height) / 2.0); ;
+                        break;
+                    case Compass.East:
+                        width = rnd.Next(20, 30);
+                        height = rnd.Next(10, 20);
+                        widthOffset += widthPrev;
+                        heightOffset += (int)Math.Round((heightPrev - height) / 2.0); ;
+                        break;
+                }
+                var b = CreateRandomRoom(width, height, rnd.Next(5, 10), rnd.Next(5, 10), widthOffset, heightOffset);
+                exitDirection = CreateRandomExit(b);
+            }
         }
 
-        public void CreateDoorWay(Room room)
+        public Compass CreateRandomExit(Room room)
         {
             var rnd = new System.Random();
             Compass direction = (Compass)Enum.GetValues(typeof(Compass)).GetValue(rnd.Next(4));
@@ -145,6 +183,7 @@ namespace Assets.Code.BusinessLogic
                     break;
             };
             CellManager.RecyclePrefab(room.cells[i].Wall.gameObject);
+            return direction;
 
         }
         public Room CreateRandomRoom(int width, int height, int blockCount, int supplyCount, int widthOffset = 0, int heightOffset = 0)
