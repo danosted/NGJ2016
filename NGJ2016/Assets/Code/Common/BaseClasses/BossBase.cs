@@ -55,8 +55,14 @@ namespace Assets.Code.Common.BaseClasses
 
         public override void Panic()
         {
+            if (Strategy != NpcStrategy.Panic)
+            {
+                Player.DisgraceMeter.PercentFull += 5f;
+                Player.DisgraceMeter.Render();
+            }
+
             Strategy = NpcStrategy.Panic;
-            gameObject.GetComponent<SpriteRenderer>().color = new Color(255f/106, 255f/ 56, 255f/ 10);
+            gameObject.GetComponent<SpriteRenderer>().color = new Color(106 / 255f, 56 / 255f, 10 / 255f);
         }
         
 
@@ -78,7 +84,7 @@ namespace Assets.Code.Common.BaseClasses
 
                 case NpcStrategy.Panic:
                     PanicTime += Time.deltaTime;
-                    if (PanicTime > 2)
+                    if (PanicTime > 3)
                     {
                         ManagerCollection.Instance.NpcSpawnHandler.DeactivateNpc(this);
                     }
