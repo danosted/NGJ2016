@@ -43,7 +43,10 @@ namespace Assets.Code.Common.BaseClasses
                     MovementSpeed = 0;
                     FacingDirection = Player.transform.position - transform.position;
                     break;
-                    
+
+                case NpcStrategy.Panic:
+                    MovementSpeed = 0;
+                    break;
             }
             transform.right = FacingDirection;
             transform.position += MovementDirection * MovementSpeed * Time.deltaTime;
@@ -53,7 +56,7 @@ namespace Assets.Code.Common.BaseClasses
         public override void Panic()
         {
             Strategy = NpcStrategy.Panic;
-            gameObject.GetComponent<SpriteRenderer>().color = new Color(255f/106,255f/ 56, 255f/ 10);
+            gameObject.GetComponent<SpriteRenderer>().color = new Color(255f/106, 255f/ 56, 255f/ 10);
         }
         
 

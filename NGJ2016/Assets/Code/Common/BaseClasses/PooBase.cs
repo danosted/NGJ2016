@@ -15,11 +15,31 @@ namespace Assets.Code.Common.BaseClasses
         public float Speed { get; set; }
         public float DistanceTravelled { get; set; }
         public float Range { get; set; }
+        public float Offset;
 
         public PooBase()
         {
             Speed = 10.0f;
             Range = 30.0f;
+            Offset = 1f;
+        }
+
+
+        public void OnCollisionEnter2D(Collision2D coll)
+        {
+            var player = coll.gameObject.GetComponent<PlayerBase>();
+            if (player != null)
+            {
+                return;
+            }
+
+            var npc = coll.gameObject.GetComponent<NpcBase>();
+            if (npc != null)
+            {
+                npc.Panic();
+            }
+
+            ManagerCollection.Instance.GetManager(Constants.PooManager).RecyclePrefab(gameObject);
         }
 
         void Update()
