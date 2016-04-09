@@ -15,10 +15,9 @@ namespace Assets.Code.Common.BaseClasses
         public PooBase()
         {
             Speed = 5.0f;
-            transform.localScale = new Vector3(10,10,0);
         }
 
-        public void Update()
+        void Update()
         {
             transform.position += Direction*Speed*Time.deltaTime;
         }
