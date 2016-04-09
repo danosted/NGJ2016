@@ -32,6 +32,8 @@ namespace Assets.Code.PrefabAccess
 
                 c.Move();
 
+                Camera.current.transform.position = new Vector3() {x = c.transform.position.x,y= c.transform.position.y,z = -3 };
+                
             }
             var deltaSeconds = (int)(Time.deltaTime * 1000);
         }
