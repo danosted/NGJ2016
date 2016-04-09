@@ -109,7 +109,6 @@ namespace Assets.Code.BusinessLogic
                     }
                     else
                     {
-                        // Start Cell
                         if (w == 1 && h == 1)
                         {
                             cell = CreateAndPlaceCellInGrid(w + widthOffset, h + heightOffset, cells, CellType.EndCell);
@@ -129,7 +128,7 @@ namespace Assets.Code.BusinessLogic
 
         public void CreateMap()
         {
-            var mapLength = 7;
+            var mapLength = 3;
             var width = rnd.Next(20, 30);
             var height = rnd.Next(10, 20);
             var widthPrev = 0;
@@ -141,7 +140,7 @@ namespace Assets.Code.BusinessLogic
             var heightOffset = 0;
             Compass exitDirection;
             CellBase exitCell;
-            var maxAttempts = 50;
+            var maxAttempts = 100;
             var nextRoomWallSize = 0;
 
 
@@ -233,94 +232,7 @@ namespace Assets.Code.BusinessLogic
             }
         }
 
-        /// <summary>
-        /// Creates a branch
-        /// </summary>
-        /// <param name="map"></param>
-        public void CreateBranchRooms(Room map, int widthOffset, int heightOffset)
-        {
-            var mapLength = 2;
-            var width = map.width;
-            var height = map.height;
-            var widthPrev = 0;
-            var heightPrev = 0;
-            var widthOffsetPrev = 0;
-            var heightOffsetPrev = 0;
-            var nextRoomWallSize = 0;
-
-            Compass exitDirection;
-            CellBase exitCell;
-            var maxAttempts = 4;
-
-            while (mapLength > 0 && maxAttempts > 0)
-            {
-                maxAttempts--;
-                widthPrev = width;
-                heightPrev = height;
-                widthOffsetPrev = widthOffset;
-                heightOffsetPrev = heightOffset;
-                exitDirection = (Compass)Enum.GetValues(typeof(Compass)).GetValue(rnd.Next(4));
-                switch (exitDirection)
-                {
-                    case Compass.North:
-                        width = rnd.Next(20, 30);
-                        height = rnd.Next(10, 20);
-                        widthOffset += (int)Math.Round((widthPrev - width) / 2.0);
-                        heightOffset += heightPrev;
-                        nextRoomWallSize = width;
-                        break;
-                    case Compass.South:
-                        width = rnd.Next(20, 30);
-                        height = rnd.Next(10, 20);
-                        widthOffset += (int)Math.Round((widthPrev - width) / 2.0);
-                        heightOffset += -height;
-                        nextRoomWallSize = width;
-                        break;
-                    case Compass.West:
-                        width = rnd.Next(20, 30);
-                        height = rnd.Next(10, 20);
-                        widthOffset += -width;
-                        heightOffset += (int)Math.Round((heightPrev - height) / 2.0);
-                        nextRoomWallSize = height;
-                        break;
-                    case Compass.East:
-                        width = rnd.Next(20, 30);
-                        height = rnd.Next(10, 20);
-                        widthOffset += widthPrev;
-                        heightOffset += (int)Math.Round((heightPrev - height) / 2.0);
-                        nextRoomWallSize = height;
-                        break;
-                };
-                if (TestNewRoomArea(width, height, widthOffset, heightOffset) == false)
-                {
-                    widthOffset = widthOffsetPrev;
-                    heightOffset = heightOffsetPrev;
-                    width = widthPrev;
-                    height = heightPrev;
-                    continue;
-                }
-                mapLength--;
-
-                CreateRandomExit(map, exitDirection, nextRoomWallSize, out exitCell);
-
-                map = CreateRandomRoom(width, height, rnd.Next(5, 10), rnd.Next(5, 10), widthOffset, heightOffset);
-                switch (exitDirection)
-                {
-                    case Compass.North:
-                        CreateEntrance(exitCell.NeighbourUp);
-                        break;
-                    case Compass.South:
-                        CreateEntrance(exitCell.NeighbourDown);
-                        break;
-                    case Compass.West:
-                        CreateEntrance(exitCell.NeighbourLeft);
-                        break;
-                    case Compass.East:
-                        CreateEntrance(exitCell.NeighbourRight);
-                        break;
-                };
-            }
-        }
+       
 
         public bool TestNewRoomArea(int width, int height,int widthOffset, int heightOffset)
         {
@@ -365,19 +277,19 @@ namespace Assets.Code.BusinessLogic
             switch (direction)
             {
                 case Compass.North:
-                    offsetForExit = (Math.Abs(room.width - nextRoomWallSize) / 2)+2;
+                    offsetForExit = (Math.Abs(room.width - nextRoomWallSize) / 2)+1;
                     i = room.cells.Count() - rnd.Next(offsetForExit, room.width - offsetForExit);
                     break;
                 case Compass.South:
-                    offsetForExit = (Math.Abs(room.width - nextRoomWallSize) / 2) + 2;
+                    offsetForExit = (Math.Abs(room.width - nextRoomWallSize) / 2) + 1;
                     i = rnd.Next(offsetForExit, room.width - offsetForExit);
                                         break;
                 case Compass.East:
-                    offsetForExit = (Math.Abs(room.height - nextRoomWallSize) / 2) + 2;
+                    offsetForExit = (Math.Abs(room.height - nextRoomWallSize) / 2) + 1;
                     i = room.width * rnd.Next(offsetForExit, room.height - offsetForExit) - 1;
                     break;
                 case Compass.West:
-                    offsetForExit = (Math.Abs(room.height - nextRoomWallSize) / 2) + 2;
+                    offsetForExit = (Math.Abs(room.height - nextRoomWallSize) / 2) + 1;
                     i = room.width * rnd.Next(offsetForExit, room.height - offsetForExit);
                     break;
             };
@@ -387,7 +299,14 @@ namespace Assets.Code.BusinessLogic
         }
         public Room CreateRandomRoom(int width, int height, int blockCount, int supplyCount, int widthOffset = 0, int heightOffset = 0, bool GoalArea = false)
         {
-            var grid = CreateStandardCellGrid(width, height, widthOffset, heightOffset);
+            var grid = new List<CellBase>();
+            if (!GoalArea)
+            {
+                grid = CreateStandardCellGrid(width, height, widthOffset, heightOffset);
+            }else
+            {
+                grid = CreateGoal(width, height, widthOffset, heightOffset);
+            }
             //var startCell = CellManager.StartCell;
             //var endCell = CellManager.EndCell;
 
@@ -459,7 +378,7 @@ namespace Assets.Code.BusinessLogic
         #region Private methods
         private CellBase CreateAndPlaceCellInGrid(int w, int h, List<CellBase> cells, CellType cellType)
         {
-            var cell = CellManager.GetPrefabFromType<CellBase>();
+            var cell = CellManager.GetRandomPrefabFromType<CellBase>();
             cell.transform.position = new Vector3(w, h, 0f);
             // Checks if for Blocked CellType
             if (cellType == CellType.BlockedCell)
@@ -470,8 +389,8 @@ namespace Assets.Code.BusinessLogic
             };
             if (cellType == CellType.EndCell)
             {
-                cell.Supply = ManagerCollection.Instance.GetManager(Constants.SupplyManagerName).GetPrefabFromType<SupplyBase>();
-                cell.Supply.transform.position = new Vector3(w,h,0f);
+                cell.Toilet = ManagerCollection.Instance.GetManager(Constants.ToiletManager).GetPrefabFromType<ToiletBase>();
+                cell.Toilet.transform.position = new Vector3(w,h,0f);
             }
             cells.Add(cell);
             return cell;
