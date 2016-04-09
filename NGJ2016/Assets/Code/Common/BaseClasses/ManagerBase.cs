@@ -4,6 +4,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace Assets.Code.Common.BaseClasses
 {
@@ -57,6 +58,28 @@ namespace Assets.Code.Common.BaseClasses
         public T GetPrefabFromType<T>()
         {
             var inactiveGO = InactiveObjects.Find(x => x.GetComponent<T>() != null);
+            if (inactiveGO != null)
+            {
+                InactiveObjects.Remove(inactiveGO);
+                ActiveObjects.Add(inactiveGO);
+                return inactiveGO.GetComponent<T>();
+            }
+            var GO = PrefabPool.Find(x => x.GetComponent<T>() != null);
+            var resultGO = GameObject.Instantiate(GO) as GameObject;
+            ActiveObjects.Add(resultGO.gameObject);
+            resultGO.transform.SetParent(transform);
+            return resultGO.GetComponent<T>();
+        }
+
+        public T GetRandomPrefabFromType<T>()
+        {
+            var inactiveGOs = InactiveObjects.Where(x => x.GetComponent<T>() != null).ToList();
+            if (!inactiveGOs.Any())
+            {
+                throw new UnityException("No prefab with type found.");
+            }
+            var rand = Random.Range(0, inactiveGOs.Count());
+            var inactiveGO = inactiveGOs[rand];
             if (inactiveGO != null)
             {
                 InactiveObjects.Remove(inactiveGO);

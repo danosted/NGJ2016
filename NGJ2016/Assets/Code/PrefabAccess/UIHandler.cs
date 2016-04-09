@@ -17,6 +17,7 @@ namespace Assets.Code.PrefabAccess
             if (_character.IsShitting)
             {
                 _character.PoopMeter.DecreaseMeter();
+                _character.FartMeter.DecreaseMeter();
             } 
             else if (_character.IsFarting)
             {
