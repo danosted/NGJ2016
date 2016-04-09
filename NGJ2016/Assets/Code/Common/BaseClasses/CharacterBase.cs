@@ -18,6 +18,8 @@ namespace Assets.Code.Common.BaseClasses
 
         public Vector3 MovementDirection { get; set; }
 
+        public Vector3 FacingDirection { get; set; }
+
         public float MovementSpeed;
 
         public float Health { get; set; }
@@ -26,19 +28,6 @@ namespace Assets.Code.Common.BaseClasses
 
         public int Money { get; set; }
 
-        private bool _isFarting;
-        public bool IsFarting
-        {
-            get
-            {
-                return FartMeter.OhShitTriggered || _isFarting;
-            }
-            set { _isFarting = value; }
-        }
-
-        public float FartSpeedBonus { get; set; }
-
-        public FartMeterBase FartMeter { get; set; }
 
         public Vector2 Position2D { get; private set; }
 

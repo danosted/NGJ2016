@@ -32,7 +32,7 @@ namespace Assets.Code.PrefabAccess
 
                 c.Move();
 
-                c.transform.right = c.MovementDirection;
+                c.transform.right = c.FacingDirection;
                 c.transform.position += c.MovementDirection * c.MovementSpeed  * Time.deltaTime;
             }
             var deltaSeconds = (int)(Time.deltaTime * 1000);

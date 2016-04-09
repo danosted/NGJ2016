@@ -18,9 +18,10 @@ namespace Assets.Code.Common.BaseClasses
                     var man = ManagerCollection.Instance.GetManager(Constants.CharacterManagerName);
                     var player = man.GetPrefabFromType<PlayerBase>();
                     MovementSpeed = 0;
-                    MovementDirection = player.transform.position - transform.position;
+                    FacingDirection = player.transform.position - transform.position;
                     break;
                 case NpcStrategy.Panic:
+                    MovementSpeed = 1;
                     break;
             }
         }

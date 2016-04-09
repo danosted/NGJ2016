@@ -13,6 +13,20 @@ namespace Assets.Code.Common.BaseClasses
 
         public CellBase CurrentTagetCell { get; set; }
 
+        private bool _isFarting;
+        public bool IsFarting
+        {
+            get
+            {
+                return FartMeter.OhShitTriggered || _isFarting;
+            }
+            set { _isFarting = value; }
+        }
+
+        public float FartSpeedBonus { get; set; }
+
+        public FartMeterBase FartMeter { get; set; }
+
         public override void Move()
         {
             var mouseDirection = Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position;
@@ -29,6 +43,7 @@ namespace Assets.Code.Common.BaseClasses
             MovementDirection += direction;
             MovementDirection *= MovementDecay;
             var totalMaxSpeed = IsFarting ? FartSpeedBonus * MaxSpeed : MaxSpeed;
+            // Normaliser til max-speed
             if (MovementDirection.magnitude > totalMaxSpeed)
             {
                 MovementDirection *= totalMaxSpeed / MovementDirection.magnitude;
