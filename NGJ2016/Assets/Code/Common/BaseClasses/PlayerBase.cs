@@ -7,7 +7,7 @@ namespace Assets.Code.Common.BaseClasses
 {
     public class PlayerBase : CharacterBase
     {
-        
+
         public Inventory Inventory { get; private set; }
 
 
@@ -31,19 +31,28 @@ namespace Assets.Code.Common.BaseClasses
 
         public FartMeterBase FartMeter { get; set; }
 
+        private Animator anim;
+
+        private int _moveDownHash;
+        private int _moveUpHash;
+        private int _moveLeftHash;
+        private int _moveRightHash;
+
         public override void Move()
         {
             var mousepos = Input.mousePosition;
             mousepos.z = 2;
             var mouseDirection = Camera.main.ScreenToWorldPoint(mousepos) - transform.position;
             
+            CalcuateAnimation(mouseDirection);
+
             if (mouseDirection.magnitude > 1)
             {
                 mouseDirection = mouseDirection.normalized;
             }
             var hor = mouseDirection.x;
             var vert = mouseDirection.y;
-            
+
             var totalSpeed = IsFarting ? FartSpeedBonus * MovementSpeed : MovementSpeed;
 
             var direction = new Vector3(totalSpeed * hor, totalSpeed * vert, 0f);
@@ -57,7 +66,7 @@ namespace Assets.Code.Common.BaseClasses
             }
 
             transform.right = FacingDirection;
-            var newPos = MovementDirection*MovementSpeed*Time.deltaTime;
+            var newPos = MovementDirection * MovementSpeed * Time.deltaTime;
             //Debug.Log(newPos);
             //if (newPos.magnitude >= 0.95f)
             //{
@@ -70,6 +79,46 @@ namespace Assets.Code.Common.BaseClasses
             {
                 Camera.main.transform.position = new Vector3() { x = transform.position.x, y = transform.position.y, z = -3 };
             }
+
+        }
+
+        private void CalcuateAnimation(Vector3 mouseDirection)
+        {
+            var xMag = Mathf.Abs(mouseDirection.x);
+            var yMag = Mathf.Abs(mouseDirection.y);
+            ResetAnimatorParams();
+            Debug.Log("xMag " + xMag + " yMag " + yMag);
+            if (yMag < xMag)
+            {
+                if (mouseDirection.x < 0)
+                {
+                    anim.SetBool("MoveLeft", true);
+                }
+                else if (0 < mouseDirection.x)
+                {
+                    anim.SetBool("MoveRight", true);
+                }
+            }
+            else
+            {
+                if (mouseDirection.y < 0)
+                {
+                    anim.SetBool("MoveDown", true);
+                }
+                else if (0 < mouseDirection.y)
+                {
+                    anim.SetBool("MoveUp", true);
+                }
+            }
+        }
+
+        private void ResetAnimatorParams()
+        {
+            anim.SetBool("MoveDown", false);
+            anim.SetBool("MoveUp", false);
+            anim.SetBool("MoveRight", false);
+            anim.SetBool("MoveLeft", false);
+
         }
 
         public override void Init()
@@ -85,6 +134,12 @@ namespace Assets.Code.Common.BaseClasses
                     .GetComponentInChildren<FartMeterBase>();
             FartSpeedBonus = 3;
             transform.position = new Vector3(1,1);
+            anim = GetComponent<Animator>();
+            _moveDownHash = Animator.StringToHash("Base Layer.MoveDown");
+            _moveUpHash = Animator.StringToHash("Base Layer.MoveUp");
+            _moveRightHash = Animator.StringToHash("Base Layer.MoveRight");
+            _moveLeftHash = Animator.StringToHash("Base Layer.MoveLeft");
+
         }
     }
 }
