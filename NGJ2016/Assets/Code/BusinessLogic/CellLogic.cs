@@ -118,6 +118,7 @@ namespace Assets.Code.BusinessLogic
             var a = CreateRandomRoom(width, height, rnd.Next(5, 10), rnd.Next(5, 10));
             CreateDoorWay(a);
             var b = CreateRandomRoom(rnd.Next(20, 30), rnd.Next(10, 20), rnd.Next(5, 10), rnd.Next(5, 10), width, height);
+            CreateDoorWay(b);
 
         }
 
@@ -130,22 +131,20 @@ namespace Assets.Code.BusinessLogic
             {
                 case Compass.North:
                     i = room.cells.Count() - rnd.Next(2, room.width - 2);
-                    room.cells[i].Wall = null;
                     break;
                 case Compass.South:
                     i = rnd.Next(2, room.width - 2);
-                    room.cells[i].Wall = null;
+
                     break;
                 case Compass.East:
                     i = room.width * rnd.Next(2, room.height - 2) - 1;
-                    room.cells[i].Wall = null;
+
                     break;
                 case Compass.West:
                     i = room.width * rnd.Next(2, room.height - 2);
-                    room.cells[i].Wall = null;
                     break;
-                    //TODO DDN: Null fjerner ikke væggen?!?!
-            }
+            };
+            CellManager.RecyclePrefab(room.cells[i].Wall.gameObject);
 
         }
         public Room CreateRandomRoom(int width, int height, int blockCount, int supplyCount, int widthOffset = 0, int heightOffset = 0)
@@ -158,7 +157,7 @@ namespace Assets.Code.BusinessLogic
                 for (var w = 1; w < width - 1; w++)
                 {
                     var randomHeight = UnityEngine.Random.Range(0, height - 1);
-                    var cell = grid.Find(c => c.transform.position.x == w && c.transform.position.y == randomHeight);
+                    var cell = grid.Find(c => c.transform.position.x == w+ widthOffset && c.transform.position.y == randomHeight+ heightOffset);
                     RecycleCell(cell);
                     cell = CreateAndPlaceCellInGrid(w + widthOffset, randomHeight + heightOffset, grid, CellType.BlockedCell);
                     SetCellNeighbours(cell, w + widthOffset, randomHeight + heightOffset, width + widthOffset, height + heightOffset);
