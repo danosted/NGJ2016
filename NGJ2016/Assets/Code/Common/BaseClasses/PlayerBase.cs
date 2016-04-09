@@ -10,7 +10,6 @@ namespace Assets.Code.Common.BaseClasses
 
         public Inventory Inventory { get; private set; }
 
-        public CellBase CurrentTagetCell { get; set; }
 
         private bool _isFarting;
         public bool IsFarting
@@ -36,19 +35,31 @@ namespace Assets.Code.Common.BaseClasses
 
         public override void Move()
         {
-            var mousepos = Input.mousePosition;
-            mousepos.z = 2;
-            var mouseDirection = Camera.main.ScreenToWorldPoint(mousepos) - transform.position;
-            
-            CalcuateAnimation(mouseDirection);
+            float hor;
+            float vert;
 
-            if (mouseDirection.magnitude > 1)
+            if (!IsFarting)
             {
-                mouseDirection = mouseDirection.normalized;
-            }
-            var hor = mouseDirection.x;
-            var vert = mouseDirection.y;
 
+                var mousepos = Input.mousePosition;
+                mousepos.z = 2;
+                var mouseDirection = Camera.main.ScreenToWorldPoint(mousepos) - transform.position;
+
+                CalcuateAnimation(mouseDirection);
+
+                if (mouseDirection.magnitude > 1)
+                {
+                    mouseDirection = mouseDirection.normalized;
+                }
+                hor = mouseDirection.x;
+                vert = mouseDirection.y;
+            }
+            else
+            {
+                hor = MovementDirection.x;
+                vert = MovementDirection.y;
+            }
+            
             var totalSpeed = IsFarting ? FartSpeedBonus * MovementSpeed : MovementSpeed;
 
             var direction = new Vector3(totalSpeed * hor, totalSpeed * vert, 0f);
@@ -60,8 +71,7 @@ namespace Assets.Code.Common.BaseClasses
             {
                 MovementDirection *= totalMaxSpeed / MovementDirection.magnitude;
             }
-
-            transform.right = FacingDirection;
+            
             var newPos = MovementDirection * MovementSpeed * Time.deltaTime;
             //Debug.Log(newPos);
             //if (newPos.magnitude >= 0.95f)
@@ -128,6 +138,7 @@ namespace Assets.Code.Common.BaseClasses
                     .GetPrefabFromType<Canvas>()
                     .GetComponentInChildren<FartMeterBase>();
             FartSpeedBonus = 3;
+            transform.position = new Vector3(1,1);
             anim = GetComponent<Animator>();
         }
     }
