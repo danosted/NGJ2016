@@ -14,6 +14,7 @@ namespace Assets.Code.PrefabAccess
         private PukeBase _puke;
         private FartBase _fart;
         private ManagerBase _projectileManager;
+        private float _timeSinceLastShit;
 
         public void CheckForPukeAndFartContinous(PukeBase p, FartBase f)
         {
@@ -54,6 +55,24 @@ namespace Assets.Code.PrefabAccess
                 mouseDirection.z = 0;
                 Debug.DrawRay(_fart.SourceCharacter.transform.position, mouseDirection);
                 _fart.transform.Translate(mouseDirection.normalized*_fart.Offset);
+
+                if (_fart.SourceCharacter.FartMeter.OhShitTriggered && _timeSinceLastShit < 5.0f)
+                {
+                    _fart.GetComponent<Renderer>().enabled = true;
+                    _fart.transform.position = _fart.SourceCharacter.transform.position;
+                    var oppositeMouseDirection =
+                        -(Camera.main.ScreenToWorldPoint(Input.mousePosition) - _fart.transform.position);
+                    var pooProjectile =
+                        ManagerCollection.Instance.GetManager(Constants.PooManager).GetPrefabFromType<PooBase>();
+                    pooProjectile.transform.position = _fart.SourceCharacter.transform.position;
+                    pooProjectile.transform.rotation = Quaternion.Euler(0, 0, zDegree);
+                    pooProjectile.Direction = oppositeMouseDirection.normalized;
+                    _timeSinceLastShit = 0.0f;
+                }
+                else
+                {
+                    _timeSinceLastShit += Time.deltaTime;
+                }
             }
             else
             {
