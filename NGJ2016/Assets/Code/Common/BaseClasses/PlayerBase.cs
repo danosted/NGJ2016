@@ -44,6 +44,8 @@ namespace Assets.Code.Common.BaseClasses
             var mousepos = Input.mousePosition;
             mousepos.z = 2;
             var mouseDirection = Camera.main.ScreenToWorldPoint(mousepos) - transform.position;
+            
+            CalcuateAnimation(mouseDirection);
 
             if (mouseDirection.magnitude > 1)
             {
@@ -66,20 +68,19 @@ namespace Assets.Code.Common.BaseClasses
 
             transform.right = FacingDirection;
             var newPos = MovementDirection * MovementSpeed * Time.deltaTime;
-            Debug.Log(newPos);
-            if (newPos.magnitude >= 0.95f)
-            {
-                Debug.Log(newPos);
-                Debug.Log(newPos.normalized);
-                newPos = newPos.normalized * 0.95f;
-            }
+            //Debug.Log(newPos);
+            //if (newPos.magnitude >= 0.95f)
+            //{
+            //    Debug.Log(newPos);
+            //    Debug.Log(newPos.normalized);
+            //    newPos = newPos.normalized*0.95f;
+            //}
             transform.position += newPos;
             if (transform.position != null)
             {
                 Camera.main.transform.position = new Vector3() { x = transform.position.x, y = transform.position.y, z = -3 };
             }
 
-            CalcuateAnimation(mouseDirection);
         }
 
         private void CalcuateAnimation(Vector3 mouseDirection)
@@ -139,7 +140,6 @@ namespace Assets.Code.Common.BaseClasses
             _moveRightHash = Animator.StringToHash("Base Layer.MoveRight");
             _moveLeftHash = Animator.StringToHash("Base Layer.MoveLeft");
 
-            Debug.Log("movedownhash " + _moveDownHash + " uphash " + _moveUpHash + " righthash " + _moveRightHash + " lefthash " + _moveLeftHash);
         }
     }
 }

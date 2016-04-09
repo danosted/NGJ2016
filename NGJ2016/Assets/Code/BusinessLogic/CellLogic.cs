@@ -347,6 +347,10 @@ namespace Assets.Code.BusinessLogic
         {
             var cells = CellManager.GetAllActiveObjects<CellBase>();
             var belowCell = cells.Find(c => c.transform.position.x == w && c.transform.position.y == h - 1);
+            if (belowCell == null)
+            {
+                return;
+            }
             cell.NeighbourDown = belowCell;
             cell.NeighBours.Add(belowCell);
 

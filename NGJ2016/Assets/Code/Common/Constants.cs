@@ -14,6 +14,7 @@ namespace Assets.Code.Common
         public const string PukeManager = "PukeManager";
         public const string FartManagerName = "FartManager";
         public const string ProjectileHandlerName = "ProjectileHandler";
+        public const string NpcSpawnHandlerName = "NpcSpawnHandler";
         public const string UiManagerName = "UIManager";
         public const string UiHandlerName = "UIHandler";
         public const string WallManagerName = "WallManager";

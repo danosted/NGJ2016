@@ -70,6 +70,21 @@
             }
         }
 
+        private NpcSpawnHandler _npcSpawnHandler;
+        public NpcSpawnHandler NpcSpawnHandler
+        {
+            get
+            {
+                if (_npcSpawnHandler == null)
+                {
+                    var prefab = Resources.Load(Constants.NpcSpawnHandlerName);
+                    var GO = (GameObject.Instantiate(prefab)) as GameObject;
+                    _npcSpawnHandler = GO.GetComponent<NpcSpawnHandler>();
+                }
+                return _npcSpawnHandler;
+            }
+        }
+
         private UIHandler _uiHandler;
         public UIHandler UIHandler
         {
