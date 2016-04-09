@@ -26,6 +26,8 @@ namespace Assets.Code.PrefabAccess
             var isPuking = Input.GetKey(KeyCode.Mouse0);
             var isFarting = Input.GetKey(KeyCode.Mouse1);
 
+            _fart.SourceCharacter.IsFarting = isFarting;
+
             if (isPuking)
             {
                 _puke.GetComponent<Renderer>().enabled = true;
@@ -35,31 +37,28 @@ namespace Assets.Code.PrefabAccess
 
                 _puke.transform.rotation = Quaternion.Euler(0, 0, zDegree);
                 mouseDirection.z = 0;
+                Debug.DrawRay(_puke.SourceCharacter.transform.position, mouseDirection);
                 var length = mouseDirection.sqrMagnitude;
                 _puke.transform.Translate(mouseDirection*0.5f);
                 _puke.transform.localScale = new Vector3(length*0.5f, 2, 1);
             }
-            else if (isFarting)
+            else if (_fart.SourceCharacter.IsFarting)
             {
-                Debug.DrawRay(_fart.SourceCharacter.transform.position, Camera.main.ScreenToWorldPoint(Input.mousePosition));
                 _fart.GetComponent<Renderer>().enabled = true;
                 _fart.transform.position = _fart.SourceCharacter.transform.position;
-                var mouseDirection = -Camera.main.ScreenToWorldPoint(Input.mousePosition) - _fart.transform.position;
-                var zDegree = Mathf.Rad2Deg * (Mathf.Atan(mouseDirection.y / mouseDirection.x));
+                var mouseDirection = -(Camera.main.ScreenToWorldPoint(Input.mousePosition) - _fart.transform.position);
+                var zDegree = Mathf.Rad2Deg*(Mathf.Atan(mouseDirection.y/mouseDirection.x));
 
                 _fart.transform.rotation = Quaternion.Euler(0, 0, zDegree);
                 mouseDirection.z = 0;
-                var length = mouseDirection.sqrMagnitude;
-                _fart.transform.Translate(mouseDirection * 0.5f);
-                _fart.transform.localScale = new Vector3(length * 0.5f, 2, 1);
+                Debug.DrawRay(_fart.SourceCharacter.transform.position, mouseDirection);
+                _fart.transform.Translate(mouseDirection.normalized*_fart.Offset);
             }
             else
             {
                 _puke.GetComponent<Renderer>().enabled = false;
                 _fart.GetComponent<Renderer>().enabled = false;
             }
-
-            var deltaSeconds = (int)(Time.deltaTime * 1000);
         }
     }
 }
