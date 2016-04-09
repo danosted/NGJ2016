@@ -19,6 +19,7 @@ namespace Assets.Code.Common
         public const string UiHandlerName = "UIHandler";
         public const string WallManagerName = "WallManager";
         public const string PooManager = "PooManager";
+        public const string ToiletManager = "ToiletManager";
         public const string AudioHandler = "AudioHandler";
     }
 }

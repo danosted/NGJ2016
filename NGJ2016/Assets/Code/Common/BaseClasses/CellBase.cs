@@ -60,6 +60,14 @@ namespace Assets.Code.Common.BaseClasses
             get { return _wall; }
             set { _wall = value; }
         }
+
+        [SerializeField]
+        private ToiletBase _toilet;
+        public ToiletBase Toilet
+        {
+            get { return _toilet; }
+            set { _toilet = value; }
+        }
         #endregion
 
         #region Graph Properties
