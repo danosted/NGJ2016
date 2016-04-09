@@ -63,6 +63,8 @@ namespace Assets.Code.Common.BaseClasses
 
             Strategy = NpcStrategy.Panic;
             gameObject.GetComponent<SpriteRenderer>().color = new Color(106 / 255f, 56 / 255f, 10 / 255f);
+            var sounds = gameObject.GetComponents<AudioSource>();
+            sounds[Random.Range(0, sounds.Length)].Play();
         }
         
 
