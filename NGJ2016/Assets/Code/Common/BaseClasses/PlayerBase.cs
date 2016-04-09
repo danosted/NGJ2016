@@ -24,6 +24,11 @@ namespace Assets.Code.Common.BaseClasses
         [SerializeField]
         public float FartSpeedBonus;
 
+        public bool CanFart
+        {
+            get { return FartMeter.PercentFull > 0.1; }
+        }
+
         public FartMeterBase FartMeter { get; set; }
 
         public override void Move()
@@ -53,6 +58,7 @@ namespace Assets.Code.Common.BaseClasses
 
             transform.right = FacingDirection;
             transform.position += MovementDirection * MovementSpeed * Time.deltaTime;
+            Camera.current.transform.position = new Vector3() { x = transform.position.x, y = transform.position.y, z = -3 };
         }
 
         public override void Init()
@@ -66,7 +72,7 @@ namespace Assets.Code.Common.BaseClasses
                 ManagerCollection.Instance.GetManager(Constants.UiManagerName)
                     .GetPrefabFromType<Canvas>()
                     .GetComponentInChildren<FartMeterBase>();
-            FartSpeedBonus = 5;
+            FartSpeedBonus = 3;
         }
     }
 }
