@@ -26,6 +26,7 @@ namespace Assets.Code.PrefabAccess
             }
         }
 
+        
         private float _timeSinceLastShit;
         
 
@@ -45,23 +46,25 @@ namespace Assets.Code.PrefabAccess
 
             if (isPuking)
             {
-                _puke.GetComponent<Renderer>().enabled = true;
-                _puke.transform.position = _puke.SourceCharacter.transform.position;
-                var mouseDirection = Camera.main.ScreenToWorldPoint(Input.mousePosition) - _puke.transform.position;
-                var zDegree = Mathf.Rad2Deg*(Mathf.Atan(mouseDirection.y/mouseDirection.x));
+                var mouseDirection = -_fart.SourceCharacter.MovementDirection;
+                var zDegree = Mathf.Rad2Deg * (Mathf.Atan(mouseDirection.y / mouseDirection.x));
 
-                _puke.transform.rotation = Quaternion.Euler(0, 0, zDegree);
-                mouseDirection.z = 0;
-                Debug.DrawRay(_puke.SourceCharacter.transform.position, mouseDirection);
-                var length = mouseDirection.sqrMagnitude;
-                _puke.transform.Translate(mouseDirection*0.5f);
-                _puke.transform.localScale = new Vector3(length*0.5f, 2, 1);
+                _fart.GetComponent<Renderer>().enabled = true;
+                _fart.transform.position = _fart.SourceCharacter.transform.position;
+                var oppositeMouseDirection =
+                    -(Camera.main.ScreenToWorldPoint(Input.mousePosition) - _fart.transform.position);
+                var pooProjectile = ProjectileManager.GetPrefabFromType<PooBase>();
+                pooProjectile.transform.position = _fart.SourceCharacter.transform.position;
+                pooProjectile.transform.rotation = Quaternion.Euler(0, 0, zDegree);
+                pooProjectile.Direction = oppositeMouseDirection.normalized;
+                _timeSinceLastShit = 0.0f;
             }
             else if (_fart.SourceCharacter.IsFarting)
             {
                 _fart.GetComponent<Renderer>().enabled = true;
                 _fart.transform.position = _fart.SourceCharacter.transform.position;
-                var mouseDirection = -(Camera.main.ScreenToWorldPoint(Input.mousePosition) - _fart.transform.position);
+                //var mouseDirection = -(Camera.main.ScreenToWorldPoint(Input.mousePosition) - _fart.transform.position);
+                var mouseDirection = -_fart.SourceCharacter.MovementDirection;
                 var zDegree = Mathf.Rad2Deg*(Mathf.Atan(mouseDirection.y/mouseDirection.x));
 
                 _fart.transform.rotation = Quaternion.Euler(0, 0, zDegree);
