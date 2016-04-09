@@ -27,6 +27,7 @@ namespace Assets.Code.PrefabAccess
             {
                 _character.FartMeter.IncreaseMeter();
                 _character.PoopMeter.IncreaseMeter();
+                _character.DisgraceMeter.DecreaseMeter();
             }
         }
     }
