@@ -70,6 +70,21 @@
             }
         }
 
+        private AudioHandler _audioHandler;
+        public AudioHandler AudioHandler
+        {
+            get
+            {
+                if (_audioHandler == null)
+                {
+                    var prefab = Resources.Load(Constants.AudioHandler);
+                    var GO = (GameObject.Instantiate(prefab)) as GameObject;
+                    _audioHandler = GO.GetComponent<AudioHandler>();
+                }
+                return _audioHandler;
+            }
+        }
+
         private NpcSpawnHandler _npcSpawnHandler;
         public NpcSpawnHandler NpcSpawnHandler
         {
