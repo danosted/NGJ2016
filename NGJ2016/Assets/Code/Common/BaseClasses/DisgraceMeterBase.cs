@@ -27,8 +27,8 @@ namespace Assets.Code.Common.BaseClasses
             var rectTransform = gameObject.GetComponent<RectTransform>();
             Debug.Log("DisgraceMeterBase rectTransform " + rectTransform);
 
-            OffsetXMax = rectTransform.rect.xMax;
-            OffsetXMin = rectTransform.rect.xMin;
+            OffsetXMax = rectTransform.offsetMax.x;
+            OffsetXMin = rectTransform.offsetMin.x;
 
             Debug.Log("DisgraceMeterBase OffsetXMax " + OffsetXMax);
             Debug.Log("DisgraceMeterBaseOffsetXMin " + OffsetXMin);
@@ -55,7 +55,8 @@ namespace Assets.Code.Common.BaseClasses
             }
             var rectTransform = gameObject.GetComponent<RectTransform>();
             Debug.Log(PercentFull);
-            rectTransform.offsetMax = new Vector2(OffsetXMax * PercentFull * 2, rectTransform.offsetMax.y);
+            rectTransform.offsetMax = new Vector2((OffsetXMax - OffsetXMin)* PercentFull +OffsetXMin, rectTransform.offsetMax.y);
+            
         }
     }
 }
