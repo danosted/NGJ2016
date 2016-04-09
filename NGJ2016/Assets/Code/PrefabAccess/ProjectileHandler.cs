@@ -60,6 +60,11 @@ namespace Assets.Code.PrefabAccess
             else if (_fart.SourceCharacter.IsFarting)
             {
                 _fart.GetComponent<Renderer>().enabled = true;
+                var audioFart = _fart.GetComponent<AudioSource>();
+                if (!audioFart.isPlaying)
+                {
+                    audioFart.Play();
+                }
                 _fart.transform.position = _fart.SourceCharacter.transform.position;
                 var mouseDirection = -(Camera.main.ScreenToWorldPoint(Input.mousePosition) - _fart.transform.position);
                 var zDegree = Mathf.Rad2Deg*(Mathf.Atan(mouseDirection.y/mouseDirection.x));
@@ -88,6 +93,8 @@ namespace Assets.Code.PrefabAccess
             }
             else
             {
+                var audioFart = _fart.GetComponent<AudioSource>();
+                audioFart.Stop();
                 _puke.GetComponent<Renderer>().enabled = false;
                 _fart.GetComponent<Renderer>().enabled = false;
             }

@@ -76,15 +76,15 @@ namespace Assets.Code.Common.BaseClasses
         public override void Init()
         {
             this.Inventory = new Inventory();
-            BaseMovementSpeed = 0.5f;
+            BaseMovementSpeed = 0.25f;
             MovementSpeed = 1f;
-            MaxSpeed = 6f;
+            MaxSpeed = 3f;
             MovementDecay = .95f;
             FartMeter =
                 ManagerCollection.Instance.GetManager(Constants.UiManagerName)
                     .GetPrefabFromType<Canvas>()
                     .GetComponentInChildren<FartMeterBase>();
-            FartSpeedBonus = 3;
+            FartSpeedBonus = 2.5f;
         }
     }
 }
