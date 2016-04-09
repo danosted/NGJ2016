@@ -37,6 +37,8 @@ namespace Assets.Code.Common.BaseClasses
 
         public PoopMeterBase PoopMeter { get; set; }
 
+        public DisgraceMeterBase DisgraceMeter { get; set; }
+
         private Animator anim;
 
         public override void Move()
@@ -142,6 +144,7 @@ namespace Assets.Code.Common.BaseClasses
             var canvas = ManagerCollection.Instance.GetManager(Constants.UiManagerName).GetPrefabFromType<Canvas>();
             FartMeter = canvas.GetComponentInChildren<FartMeterBase>();
             PoopMeter = canvas.GetComponentInChildren<PoopMeterBase>();
+            DisgraceMeter = canvas.GetComponentInChildren<DisgraceMeterBase>();
             FartSpeedBonus = 2.5f;
             transform.position = new Vector3(1,1);
             anim = GetComponent<Animator>();

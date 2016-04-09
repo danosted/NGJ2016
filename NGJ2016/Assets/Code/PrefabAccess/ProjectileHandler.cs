@@ -49,8 +49,12 @@ namespace Assets.Code.PrefabAccess
                     audioFart.Play();
                 }
                 _fart.transform.position = _fart.SourceCharacter.transform.position;
-                var mouseDirection = -(Camera.main.ScreenToWorldPoint(Input.mousePosition) - _fart.transform.position);
+                //var mouseDirection = -(Camera.main.ScreenToWorldPoint(Input.mousePosition) - _fart.transform.position);
+                var mouseDirection = -_fart.SourceCharacter.MovementDirection;
                 var zDegree = Mathf.Rad2Deg*(Mathf.Atan(mouseDirection.y/mouseDirection.x));
+
+                Debug.DrawLine(_fart.SourceCharacter.transform.position, _fart.transform.position + mouseDirection);
+                Debug.DrawRay(_fart.SourceCharacter.transform.position, mouseDirection);
 
                 _fart.transform.rotation = Quaternion.Euler(0, 0, zDegree);
                 mouseDirection.z = 0;
@@ -59,7 +63,7 @@ namespace Assets.Code.PrefabAccess
                 if (_fart.SourceCharacter.IsShitting && _timeSinceLastShit > 0.5f)
                 {
                     _fart.GetComponent<Renderer>().enabled = true;
-                    _fart.transform.position = _fart.SourceCharacter.transform.position;
+
                     var oppositeMouseDirection =
                         -(Camera.main.ScreenToWorldPoint(Input.mousePosition) - _fart.transform.position);
                     var pooProjectile = ProjectileManager.GetPrefabFromType<PooBase>();
