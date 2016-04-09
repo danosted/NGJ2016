@@ -7,13 +7,13 @@ using Assets.Code.Common.Objects;
 using Assets.Code.Common.Enums;
 using Assets.Code.PrefabAccess;
 using UnityEditor;
+using UnityEngine.SocialPlatforms.GameCenter;
 
 namespace Assets.Code.Common.BaseClasses
 {
     public class NpcBase : CharacterBase
     {
         public Guid Id;
-
 
         private ManagerBase _characterManager;
         public ManagerBase CharacterManager
@@ -47,6 +47,9 @@ namespace Assets.Code.Common.BaseClasses
         [SerializeField]
         public float PanicSpeed;
 
+        [SerializeField]
+        public float PanicDirectionBias;
+
         public override void Move()
         {
             switch (Strategy)
@@ -58,8 +61,9 @@ namespace Assets.Code.Common.BaseClasses
                     break;
                 case NpcStrategy.Panic:
                     MovementSpeed = 1;
-                    MovementDirection = Quaternion.AngleAxis(UnityEngine.Random.value*10-10, Vector3.forward) * FacingDirection;
-                    MovementDirection = new Vector3(MovementDirection.x, MovementDirection.y, 0).normalized * PanicSpeed;
+                    var angle = UnityEngine.Random.value*20 - 10 + PanicDirectionBias;
+                    FacingDirection = Quaternion.AngleAxis(angle, Vector3.forward) * FacingDirection;
+                    MovementDirection = new Vector3(FacingDirection.x, FacingDirection.y, 0).normalized * PanicSpeed;
 
                     break;
             }
@@ -72,18 +76,19 @@ namespace Assets.Code.Common.BaseClasses
             if (coll.gameObject.GetComponent<PooBase>() != null || coll.gameObject.GetComponent<PlayerBase>() != null)
             {
                 Strategy = NpcStrategy.Panic;
+                gameObject.GetComponent<SpriteRenderer>().color = Color.red;
             }
         }
 
         public override void Init()
         {
             Id = Guid.NewGuid();
-            Strategy = NpcStrategy.Look;
+            Strategy = UnityEngine.Random.value > 0.5 ? NpcStrategy.Look : NpcStrategy.Idle;
             BaseMovementSpeed = 0.5f;
             MaxSpeed = 6f;
             PanicSpeed = 6f;
             MovementDecay = .95f;
-            
+            PanicDirectionBias = UnityEngine.Random.value*20 - 10;
         }
     }
 }
