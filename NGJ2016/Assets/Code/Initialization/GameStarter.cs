@@ -32,12 +32,13 @@ namespace Assets.Code.Initialization
 
             ManagerCollection.Instance.MovementHandler.MoveCharacterContinuous(pl);
             ManagerCollection.Instance.ProjectileHandler.CheckForPukeAndFartContinous(pk,fa);
+            LogicCollection.Instance.CellLogic.CreateStandardCellGrid(3, 3);
             ManagerCollection.Instance.UIHandler.SetCharacter(pl);
 
-            LogicCollection.Instance.CellLogic.CreateStandardCellGrid(3, 3);
-            var cells = ManagerCollection.Instance.GetManager(Constants.CellManagerName).GetAllActiveObjects<CellBase>();
-            cells[2].Supply = ManagerCollection.Instance.GetManager(Constants.SupplyManagerName).GetPrefabFromType<SupplyBase>();
-            cells[2].Supply.transform.position = cells[2].transform.position; 
+            
+            //var cells = ManagerCollection.Instance.GetManager(Constants.CellManagerName).GetAllActiveObjects<CellBase>();
+            //cells[2].Supply = ManagerCollection.Instance.GetManager(Constants.SupplyManagerName).GetPrefabFromType<SupplyBase>();
+            //cells[2].Supply.transform.position = cells[2].transform.position; 
         }
     }
 }

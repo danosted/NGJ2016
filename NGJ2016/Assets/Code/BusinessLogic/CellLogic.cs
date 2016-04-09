@@ -10,13 +10,29 @@ using UnityEngine;
 
 namespace Assets.Code.BusinessLogic
 {
+    public class Room
+    {
+        public int width { get; set; }
+        public int height { get; set; }
+        public List<CellBase> cells { get; set; }
+    }
     public class CellLogic
     {
         #region Constructor
         public ManagerBase CellManager { get; private set; }
+        //public List<CellBase> cells;
+        private enum Compass
+        {
+            North = 1,
+            East = 2,
+            South = 3,
+            West = 4,
+        };
+
         public CellLogic()
         {
             CellManager = ManagerCollection.Instance.GetManager(Constants.CellManagerName);
+
         }
         #endregion
 
@@ -51,7 +67,7 @@ namespace Assets.Code.BusinessLogic
         #endregion
 
         #region Create Grid
-        public List<CellBase> CreateStandardCellGrid(int width, int height)
+        public List<CellBase> CreateStandardCellGrid(int width, int height, int widthOffset = 0, int heightOffset = 0)
         {
             var cells = new List<CellBase>(width * height);
             for (int h = 0; h < height; h++)
@@ -59,55 +75,116 @@ namespace Assets.Code.BusinessLogic
                 for (int w = 0; w < width; w++)
                 {
                     CellBase cell;
-                    if (w == 0 && h == height / 2)
+                    var rnd = new System.Random();
+                    // Boarders
+                    if (w == 0 || w == width - 1 || h == height - 1 || h == 0)
                     {
-                        // Start cell
-                        cell = CreateAndPlaceCellInGrid(w, h, cells, CellType.StartCell);
-                    }
-                    else if (w == width - 1 && h == height / 2)
-                    {
-                        // End cell
-                        cell = CreateAndPlaceCellInGrid(w, h, cells, CellType.EndCell);
+                        cell = CreateAndPlaceCellInGrid(w + widthOffset, h + heightOffset, cells, CellType.BlockedCell);
                     }
                     else
                     {
-                        // Normal cell
-                        cell = CreateAndPlaceCellInGrid(w, h, cells, CellType.NormalCell);
+                        // Start Cell
+                        if (w == 1 && h == height / 2)
+                        {
+                            cell = CreateAndPlaceCellInGrid(w + widthOffset, h + heightOffset, cells, CellType.StartCell);
+                        }
+                        else
+                        {
+                            // End cell
+                            if (w == width - 1 && h == height / 2)
+                            {
+                                cell = CreateAndPlaceCellInGrid(w + widthOffset, h + heightOffset, cells, CellType.EndCell);
+                            }
+                            else
+                            {
+                                // Normal cell
+                                cell = CreateAndPlaceCellInGrid(w + widthOffset, h + heightOffset, cells, CellType.NormalCell);
+                            }
+                        }
+
                     }
-                    SetCellNeighboursIterative(cell, cells, w, h, width, height);
+                    //SetCellNeighboursIterative(cell, cells, w+ widthOffset, h+ heightOffset, width, height);
                 }
             }
             return cells;
         }
 
-        //public List<CellBase> CreateRandomCellGrid(int width, int height, int blockCount)
-        //{
-        //    var cellManager = ManagerCollection.Instance.CellManager;
-        //    var grid = CreateStandardCellGrid(width, height);
-        //    var startCell = cellManager.StartCell;
-        //    var endCell = cellManager.EndCell;
-        //    while (blockCount > 0)
-        //    {
-        //        for (var w = 1; w < width - 1; w++)
-        //        {
-        //            var randomHeight = Random.Range(0, height - 1);
-        //            var cell = grid.Find(c => c.transform.position.x == w && c.transform.position.y == randomHeight);
-        //            if (cell == null) { throw new UnityException("Cell was not found."); }
-        //            if (!LogicCollection.Instance.GraphLogic.IsPathAvailableOnCellBlocked(cell)) continue;
-        //            if (cell == startCell || cell == endCell)
-        //            {
-        //                Debug.LogError("Cell was Start or End Cell - NOT GOOD.");
-        //            }
-        //            RecycleCell(cell);
-        //            cell = CreateAndPlaceCellInGrid(w, randomHeight, grid, cellManager, CellType.BlockedCell);
-        //            SetCellNeighbours(cell, w, randomHeight, width, height);
-        //            blockCount--;
-        //            if (blockCount <= 0) break;
-        //        }
-        //    }
-        //    LogicCollection.Instance.GraphLogic.SetShortestPathFromCellToGoalFromCells(cellManager.StartCell, cellManager.EndCell, grid);
-        //    return grid;
-        //}
+        public void CreateMap()
+        {
+            // Random Generator
+            var rnd = new System.Random();
+            var width = rnd.Next(20, 30);
+            var height = rnd.Next(10, 20);
+            var a = CreateRandomRoom(width, height, rnd.Next(5, 10), rnd.Next(5, 10));
+            CreateDoorWay(a);
+            var b = CreateRandomRoom(rnd.Next(20, 30), rnd.Next(10, 20), rnd.Next(5, 10), rnd.Next(5, 10), width, height);
+
+        }
+
+        public void CreateDoorWay(Room room)
+        {
+            var rnd = new System.Random();
+            Compass direction = (Compass)Enum.GetValues(typeof(Compass)).GetValue(rnd.Next(4));
+            var i = 0;
+            switch (direction)
+            {
+                case Compass.North:
+                    i = room.cells.Count() - rnd.Next(2, room.width - 2);
+                    room.cells[i].Wall = null;
+                    break;
+                case Compass.South:
+                    i = rnd.Next(2, room.width - 2);
+                    room.cells[i].Wall = null;
+                    break;
+                case Compass.East:
+                    i = room.width * rnd.Next(2, room.height - 2) - 1;
+                    room.cells[i].Wall = null;
+                    break;
+                case Compass.West:
+                    i = room.width * rnd.Next(2, room.height - 2);
+                    room.cells[i].Wall = null;
+                    break;
+                    //TODO DDN: Null fjerner ikke væggen?!?!
+            }
+
+        }
+        public Room CreateRandomRoom(int width, int height, int blockCount, int supplyCount, int widthOffset = 0, int heightOffset = 0)
+        {
+            var grid = CreateStandardCellGrid(width, height, widthOffset, heightOffset);
+            //var startCell = CellManager.StartCell;
+            //var endCell = CellManager.EndCell;
+            while (blockCount > 0)
+            {
+                for (var w = 1; w < width - 1; w++)
+                {
+                    var randomHeight = UnityEngine.Random.Range(0, height - 1);
+                    var cell = grid.Find(c => c.transform.position.x == w && c.transform.position.y == randomHeight);
+                    RecycleCell(cell);
+                    cell = CreateAndPlaceCellInGrid(w + widthOffset, randomHeight + heightOffset, grid, CellType.BlockedCell);
+                    SetCellNeighbours(cell, w + widthOffset, randomHeight + heightOffset, width + widthOffset, height + heightOffset);
+                    blockCount--;
+                    if (blockCount <= 0) break;
+                }
+            }
+            while (supplyCount > 0)
+            {
+                for (var w = 1; w < width - 1; w++)
+                {
+                    var randomHeight = UnityEngine.Random.Range(0, height - 1);
+                    var cell = grid.Find(c => c.transform.position.x == w + widthOffset && c.transform.position.y == randomHeight + heightOffset);
+
+                    if (cell.Wall == null)
+                    {
+                        cell.Supply = ManagerCollection.Instance.GetManager(Constants.SupplyManagerName).GetPrefabFromType<SupplyBase>();
+                        cell.Supply.transform.position = new Vector3(w + widthOffset, randomHeight + heightOffset, 0f);
+                        supplyCount--;
+                        if (supplyCount <= 0) break;
+                    }
+                }
+            }
+            var room = new Room { width = width, height = height, cells = grid };
+            return room;
+        }
         #endregion
 
         #region Recycling
@@ -146,6 +223,13 @@ namespace Assets.Code.BusinessLogic
         {
             var cell = CellManager.GetPrefabFromType<CellBase>();
             cell.transform.position = new Vector3(w, h, 0f);
+            // Checks if for Blocked CellType
+            if (cellType == CellType.BlockedCell)
+            {
+                cell.Wall = ManagerCollection.Instance.GetManager(Constants.WallManagerName).GetPrefabFromType<WallBase>();
+                cell.Wall.transform.position = new Vector3(w, h, 0f);
+
+            }
             cells.Add(cell);
             return cell;
         }

@@ -52,6 +52,14 @@ namespace Assets.Code.Common.BaseClasses
             get { return _supply; }
             set { _supply = value; }
         }
+
+        [SerializeField]
+        private WallBase _wall;
+        public WallBase Wall
+        {
+            get { return _wall; }
+            set { _wall = value; }
+        }
         #endregion
 
         #region Graph Properties
