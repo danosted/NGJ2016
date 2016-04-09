@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Linq;
 using Assets.Code;
 using Assets.Code.Common.Objects;
 using Assets.Code.Common.Enums;
@@ -16,7 +17,7 @@ namespace Assets.Code.Common.BaseClasses
                 case NpcStrategy.Idle:
                 case NpcStrategy.Look:
                     var man = ManagerCollection.Instance.GetManager(Constants.CharacterManagerName);
-                    var player = man.GetPrefabFromType<PlayerBase>();
+                    var player = man.GetAllActiveObjects<PlayerBase>().First();
                     MovementSpeed = 0;
                     FacingDirection = player.transform.position - transform.position;
                     break;
