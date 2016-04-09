@@ -46,7 +46,7 @@ namespace Assets.Code.Common.BaseClasses
             float hor;
             float vert;
 
-            if (!IsFarting)
+            if (!IsFarting || IsShitting)
             {
 
                 var mousepos = Input.mousePosition;
@@ -101,7 +101,7 @@ namespace Assets.Code.Common.BaseClasses
             var xMag = Mathf.Abs(mouseDirection.x);
             var yMag = Mathf.Abs(mouseDirection.y);
             ResetAnimatorParams();
-            Debug.Log("xMag " + xMag + " yMag " + yMag);
+            //Debug.Log("xMag " + xMag + " yMag " + yMag);
             if (yMag < xMag)
             {
                 if (mouseDirection.x < 0)

@@ -56,14 +56,6 @@ namespace Assets.Code.Common.BaseClasses
 
         
 
-        public void OnCollisionEnter2D(Collision2D coll)
-        {
-            if (coll.gameObject.GetComponent<PooBase>() != null)
-            {
-                Panic();
-            }
-        }
-
         public abstract void Panic();
 
 
