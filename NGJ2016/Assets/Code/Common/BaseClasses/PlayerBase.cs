@@ -160,6 +160,7 @@ namespace Assets.Code.Common.BaseClasses
             {
                 var winText = canvas.GetComponentInChildren<UnityEngine.UI.Text>();
                 winText.text = "Let it riiiiiiipppp!!!";
+                PoopMeter.Poopargeddon = true;
 
             }
         }

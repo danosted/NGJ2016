@@ -128,7 +128,7 @@ namespace Assets.Code.BusinessLogic
 
         public void CreateMap()
         {
-            var mapLength = 4;
+            var mapLength = 10;
             var width = rnd.Next(20, 30);
             var height = rnd.Next(10, 20);
             var widthPrev = 0;
@@ -164,7 +164,7 @@ namespace Assets.Code.BusinessLogic
                 }
                 else
                 {
-                    width = rnd.Next(20, 30);
+                    width = rnd.Next(10, 20);
                     height = rnd.Next(10, 20);
                 }
 
@@ -205,7 +205,7 @@ namespace Assets.Code.BusinessLogic
                 //mapPrev = map;
                 if (mapLength > 1)
                 {
-                    map = CreateRandomRoom(width, height, rnd.Next(5, 10), rnd.Next(5, 10), widthOffset, heightOffset);
+                    map = CreateRandomRoom(width, height, rnd.Next(5, 10), rnd.Next(5, width), widthOffset, heightOffset);
                 }
                 else
                 {
@@ -292,25 +292,60 @@ namespace Assets.Code.BusinessLogic
         {
             var i = 0;
             var offsetForExit = 0;
+            var random = 0;
+            Debug.Log("Exit. Width = " + room.width + " - Height = " + room.height + " - nextRoomWallSize = " + nextRoomWallSize + " - Direction = " + direction.ToString());
             switch (direction)
             {
                 case Compass.North:
-                    offsetForExit = (Math.Abs(room.width - nextRoomWallSize) / 2)+1;
-                    i = room.cells.Count() - rnd.Next(offsetForExit, room.width - offsetForExit);
+                    offsetForExit = (Math.Abs(room.width - nextRoomWallSize) / 2)+2;
+                    if (offsetForExit > room.width - offsetForExit)
+                    {
+                        random = offsetForExit;
+                    }
+                    else
+                    {
+                        random = rnd.Next(offsetForExit, room.width - offsetForExit);
+                    }
+                    i = room.cells.Count() - random;
                     break;
                 case Compass.South:
-                    offsetForExit = (Math.Abs(room.width - nextRoomWallSize) / 2) + 1;
-                    i = rnd.Next(offsetForExit, room.width - offsetForExit);
-                                        break;
+                    offsetForExit = (Math.Abs(room.width - nextRoomWallSize) / 2) + 2;
+                    if (offsetForExit > room.width - offsetForExit)
+                    {
+                        random = offsetForExit;
+                    }
+                    else
+                    {
+                        random = rnd.Next(offsetForExit, room.width - offsetForExit);
+                    }
+                    i = random;
+                    break;
                 case Compass.East:
-                    offsetForExit = (Math.Abs(room.height - nextRoomWallSize) / 2) + 1;
-                    i = room.width * (rnd.Next(offsetForExit+1, room.height - offsetForExit)-1) - 1;
+                    offsetForExit = (Math.Abs(room.height - nextRoomWallSize) / 2) + 2;
+                    if (offsetForExit > room.height - offsetForExit)
+                    {
+                        random = offsetForExit;
+                    }
+                    else
+                    {
+                        random = rnd.Next(offsetForExit, room.height - offsetForExit);
+                    }
+                    i = room.width * (random) - 1;
                     break;
                 case Compass.West:
-                    offsetForExit = (Math.Abs(room.height - nextRoomWallSize) / 2) + 1;
-                    i = room.width * rnd.Next(offsetForExit, room.height - offsetForExit);
+                    offsetForExit = (Math.Abs(room.height - nextRoomWallSize) / 2) + 2;
+                    if (offsetForExit > room.height - offsetForExit)
+                    {
+                        random = offsetForExit;
+                    }
+                    else
+                    {
+                        random = rnd.Next(offsetForExit, room.height - offsetForExit);
+                    }
+                    i = room.width * random;
                     break;
             };
+            Debug.Log("Random = "+random+" - i = "+i);
             CellManager.RecyclePrefab(room.cells[i].Wall.gameObject);
             exitCell = room.cells[i];
 
@@ -332,31 +367,31 @@ namespace Assets.Code.BusinessLogic
             //{
             //    for (var w = 1; w < width - 1; w++)
             //    {
-            //        var randomHeight = UnityEngine.Random.Range(1, height - 1);
-            //        var cell = grid.Find(c => c.transform.position.x == w+ widthOffset && c.transform.position.y == randomHeight+ heightOffset);
+            //        var randomHeight = UnityEngine.Random.Range(2, height - 1);
+            //        var cell = grid.Find(c => c.transform.position.x == w + widthOffset && c.transform.position.y == randomHeight + heightOffset);
             //        RecycleCell(cell);
             //        cell = CreateAndPlaceCellInGrid(w + widthOffset, randomHeight + heightOffset, grid, CellType.BlockedCell);
-            //        SetCellNeighbours(cell, w + widthOffset, randomHeight + heightOffset,  widthOffset,  heightOffset);
+            //        SetCellNeighbours(cell, w + widthOffset, randomHeight + heightOffset, widthOffset, heightOffset);
             //        blockCount--;
             //        if (blockCount <= 0) break;
             //    }
             //}
-            //while (supplyCount > 0)
-            //{
-            //    for (var w = 1; w < width - 1; w++)
-            //    {
-            //        var randomHeight = UnityEngine.Random.Range(1, height - 1);
-            //        var cell = grid.Find(c => c.transform.position.x == w + widthOffset && c.transform.position.y == randomHeight + heightOffset);
+            while (supplyCount > 0)
+            {
+                for (var w = 1; w < width - 1; w++)
+                {
+                    var randomHeight = UnityEngine.Random.Range(2, height - 1);
+                    var cell = grid.Find(c => c.transform.position.x == w + widthOffset && c.transform.position.y == randomHeight + heightOffset);
 
-            //        if (cell.Wall == null)
-            //        {
-            //            cell.Supply = ManagerCollection.Instance.GetManager(Constants.SupplyManagerName).GetPrefabFromType<SupplyBase>();
-            //            cell.Supply.transform.position = new Vector3(w + widthOffset, randomHeight + heightOffset, 0f);
-            //            supplyCount--;
-            //            if (supplyCount <= 0) break;
-            //        }
-            //    }
-            //}
+                    if (cell.Wall == null)
+                    {
+                        cell.Supply = ManagerCollection.Instance.GetManager(Constants.SupplyManagerName).GetRandomPrefabFromType<SupplyBase>();
+                        cell.Supply.transform.position = new Vector3(w + widthOffset, randomHeight + heightOffset, 0f);
+                        supplyCount--;
+                        if (supplyCount <= 0) break;
+                    }
+                }
+            }
             var room = new Room { width = width, height = height, cells = grid };
             return room;
         }
