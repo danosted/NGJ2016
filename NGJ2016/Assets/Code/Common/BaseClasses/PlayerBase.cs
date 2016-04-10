@@ -1,5 +1,11 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using Assets.Code.Common.Objects;
+using Assets.Code.PrefabAccess;
+using UnityEditor;
+using UnityEditor.SceneManagement;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 namespace Assets.Code.Common.BaseClasses
 {
@@ -153,9 +159,9 @@ namespace Assets.Code.Common.BaseClasses
             var toilet = coll.gameObject.GetComponent<ToiletBase>();
             if (toilet != null)
             {
+                var winText = GameObject.FindGameObjectWithTag("Win Text").GetComponent<Text>();
                 var sound = gameObject.GetComponent<AudioSource>();
                 sound.Play();
-                var winText = canvas.GetComponentInChildren<UnityEngine.UI.Text>();
                 winText.text = "Let it riiiiiiipppp!!!";
                 PoopMeter.Poopargeddon = true;
 

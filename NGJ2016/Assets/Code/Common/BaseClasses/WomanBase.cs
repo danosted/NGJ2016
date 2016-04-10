@@ -66,7 +66,7 @@ namespace Assets.Code.Common.BaseClasses
         {
             if (Strategy != NpcStrategy.Panic)
             {
-                Player.DisgraceMeter.PercentFull -= 0.05f;
+                Player.DisgraceMeter.PercentFull -= 0.1f;
                 Player.DisgraceMeter.Render();
             }
             Strategy = NpcStrategy.Panic;

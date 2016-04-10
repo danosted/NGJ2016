@@ -14,7 +14,10 @@ namespace Assets.Code.Initialization
     {
         void Awake()
         {
-            
+            OnLevelWasLoaded();
+        }
+        void OnLevelWasLoaded()
+        {
             var characterManager = ManagerCollection.Instance.GetManager(Constants.CharacterManagerName);
             var pl = characterManager.GetPrefabFromType<PlayerBase>();
             pl.Init();
@@ -40,5 +43,7 @@ namespace Assets.Code.Initialization
             //cells[2].Supply = ManagerCollection.Instance.GetManager(Constants.SupplyManagerName).GetPrefabFromType<SupplyBase>();
             //cells[2].Supply.transform.position = cells[2].transform.position; 
         }
+
+
     }
 }
