@@ -85,6 +85,7 @@ namespace Assets.Code.PrefabAccess
             npc.transform.position = cellPosition;
             ActiveNpcs.Add(npc.Id, npc);
             ManagerCollection.Instance.MovementHandler.MoveCharacterContinuous(npc);
+            Debug.Log("NPC: "+npc.GetType() + " - position: "+npc.transform.position);
         }
 
         public void DeactivateNpc(NpcBase npc)
