@@ -55,7 +55,7 @@ namespace Assets.Code.Common.BaseClasses
                 PercentFull = 1f;
             }
             var rectTransform = gameObject.GetComponent<RectTransform>();
-            Debug.Log(PercentFull);
+            //Debug.Log(PercentFull);
             rectTransform.offsetMax = new Vector2((OffsetXMax - OffsetXMin)* PercentFull +OffsetXMin, rectTransform.offsetMax.y);
             
         }

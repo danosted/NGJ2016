@@ -102,7 +102,7 @@ namespace Assets.Code.Common.BaseClasses
         #region Recycling
         internal void RecyclePrefab(GameObject gameObject)
         {
-            var entityGO = gameObject.gameObject;
+            //var entityGO = gameObject.gameObject;
             ActiveObjects.Remove(gameObject);
             InactiveObjects.Add(gameObject);
             gameObject.transform.position = Vector3.zero;
