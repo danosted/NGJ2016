@@ -67,24 +67,27 @@ namespace Assets.Code.PrefabAccess
 
         public void SpawnNpc()
         {
-            NpcBase npc;
-            if (numWomen == 0 || numBosses/(float) numWomen > 0.7)
-            {
-                npc = CharacterManager.GetPrefabFromType<WomanBase>();
-                numWomen++;
-            }
-            else
-            {
-                npc = CharacterManager.GetPrefabFromType<BossBase>();
-                numBosses++;
-            }
-
-            npc.Init();
             var activeCells = CellManager.GetAllActiveObjects<CellBase>().Where(c => c.Wall == null).ToList();
-            var cellPosition = activeCells[Random.Range(0, activeCells.Count)].transform.position;
-            npc.transform.position = cellPosition;
-            ActiveNpcs.Add(npc.Id, npc);
-            ManagerCollection.Instance.MovementHandler.MoveCharacterContinuous(npc);
+            if (activeCells.Count > 0)
+            {
+                NpcBase npc;
+                if (numWomen == 0 || numBosses / (float)numWomen > 0.7)
+                {
+                    npc = CharacterManager.GetPrefabFromType<WomanBase>();
+                    numWomen++;
+                }
+                else
+                {
+                    npc = CharacterManager.GetPrefabFromType<BossBase>();
+                    numBosses++;
+                }
+
+                npc.Init();
+                var cellPosition = activeCells[Random.Range(0, activeCells.Count)].transform.position;
+                npc.transform.position = cellPosition;
+                ActiveNpcs.Add(npc.Id, npc);
+                ManagerCollection.Instance.MovementHandler.MoveCharacterContinuous(npc);
+            }
         }
 
         public void DeactivateNpc(NpcBase npc)

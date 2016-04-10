@@ -162,7 +162,8 @@ namespace Assets.Code.Common.BaseClasses
                 sound.Play();
                 winText.text = "Let it riiiiiiipppp!!!";
                 PoopMeter.Poopargeddon = true;
-
+                PoopMeter.DecreaseSpeed = 0;
+                DisgraceMeter.DecreaseSpeed = 0;
             }
         }
     }
