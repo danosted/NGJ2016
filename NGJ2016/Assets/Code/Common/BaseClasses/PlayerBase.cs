@@ -158,6 +158,8 @@ namespace Assets.Code.Common.BaseClasses
             var toilet = coll.gameObject.GetComponent<ToiletBase>();
             if (toilet != null)
             {
+                var sound = gameObject.GetComponent<AudioSource>();
+                sound.Play();
                 var winText = canvas.GetComponentInChildren<UnityEngine.UI.Text>();
                 winText.text = "Let it riiiiiiipppp!!!";
                 PoopMeter.Poopargeddon = true;
