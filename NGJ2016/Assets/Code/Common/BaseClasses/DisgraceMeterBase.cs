@@ -22,7 +22,7 @@ namespace Assets.Code.Common.BaseClasses
             //OffsetMaxXMin = -600f;
 
             IncreaseSpeed = 0.15f;
-            DecreaseSpeed = 0.02f;
+            DecreaseSpeed = 0.015f;
 
             PercentFull = 1.0f;
             var rectTransform = gameObject.GetComponent<RectTransform>();
