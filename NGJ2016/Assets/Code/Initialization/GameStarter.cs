@@ -14,10 +14,6 @@ namespace Assets.Code.Initialization
     {
         void Awake()
         {
-            OnLevelWasLoaded();
-        }
-        void OnLevelWasLoaded()
-        {
             var characterManager = ManagerCollection.Instance.GetManager(Constants.CharacterManagerName);
             var pl = characterManager.GetPrefabFromType<PlayerBase>();
             pl.Init();
