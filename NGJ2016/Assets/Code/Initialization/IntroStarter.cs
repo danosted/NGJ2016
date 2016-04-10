@@ -17,7 +17,9 @@ namespace Assets.Code.Initialization
         {
             if (Input.anyKey)
             {
+                Destroy(Hearts.gameObject);
                 SceneManager.LoadScene(1);
+                gameObject.SetActive(false);
             }
         }
     }
