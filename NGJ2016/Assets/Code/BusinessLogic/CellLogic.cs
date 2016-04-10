@@ -295,7 +295,7 @@ namespace Assets.Code.BusinessLogic
             switch (direction)
             {
                 case Compass.North:
-                    offsetForExit = (Math.Abs(room.width - nextRoomWallSize) / 2)+2;
+                    offsetForExit = (Math.Abs(room.width - nextRoomWallSize) / 2)+3;
                     if (offsetForExit > room.width - offsetForExit)
                     {
                         random = offsetForExit;
