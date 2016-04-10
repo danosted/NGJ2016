@@ -114,8 +114,9 @@ namespace Assets.Code.Common.BaseClasses
         public override void Init()
         {
             base.Init();
-            PanicSpeed = 6f;
+            PanicSpeed = 5f;
             PanicDirectionBias = UnityEngine.Random.value*20 - 10;
+            BaseMovementSpeed = 0.9f;
         }
     }
 }

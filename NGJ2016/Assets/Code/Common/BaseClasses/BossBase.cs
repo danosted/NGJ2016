@@ -103,6 +103,7 @@ namespace Assets.Code.Common.BaseClasses
         public override void Init()
         {
             base.Init();
+            BaseMovementSpeed = 0.8f;
         }
     }
 }

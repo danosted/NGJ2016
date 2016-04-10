@@ -76,7 +76,6 @@ namespace Assets.Code.BusinessLogic
                 for (int w = 0; w < width; w++)
                 {
                     CellBase cell;
-                    var rnd = new System.Random();
                     // Boarders
                     if (w == 0 || w == width - 1 || h == height - 1 || h == 0)
                     {
@@ -101,7 +100,6 @@ namespace Assets.Code.BusinessLogic
                 for (int w = 0; w < width; w++)
                 {
                     CellBase cell;
-                    var rnd = new System.Random();
                     // Boarders
                     if (w == 0 || w == width - 1 || h == height - 1 || h == 0)
                     {
