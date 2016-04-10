@@ -143,8 +143,8 @@ namespace Assets.Code.BusinessLogic
 
 
             var map = CreateRandomRoom(width, height, rnd.Next(5, 10), rnd.Next(5, 10));
-            exitDirection = (Compass)Enum.GetValues(typeof(Compass)).GetValue(rnd.Next(4));
-            var mapPrev = map;
+            //exitDirection = (Compass)Enum.GetValues(typeof(Compass)).GetValue(rnd.Next(4));
+            //var mapPrev = map;
 
             while (mapLength > 0 && maxAttempts > 0)
             {

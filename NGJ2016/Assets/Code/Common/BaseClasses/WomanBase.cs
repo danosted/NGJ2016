@@ -21,7 +21,7 @@ namespace Assets.Code.Common.BaseClasses
 
         public override void Move()
         {
-            Debug.Log("Pre Woman Position: " + transform.position);
+            //Debug.Log("Pre Woman Position: " + transform.position);
             switch (Strategy)
             {
                 case NpcStrategy.Idle:
@@ -60,7 +60,7 @@ namespace Assets.Code.Common.BaseClasses
             }
             transform.right = FacingDirection;
             transform.position += MovementDirection * MovementSpeed * Time.deltaTime;
-            Debug.Log("Post Woman Position: " + transform.position);
+            //Debug.Log("Post Woman Position: " + transform.position);
         }
         
 
