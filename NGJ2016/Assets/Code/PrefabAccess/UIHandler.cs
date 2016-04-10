@@ -29,6 +29,7 @@ namespace Assets.Code.PrefabAccess
                 _character.PoopMeter.IncreaseMeter();
                 _character.DisgraceMeter.DecreaseMeter();
             }
+            _character.ToiletNotifier.Render();
         }
     }
 }

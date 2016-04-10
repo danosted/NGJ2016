@@ -8,7 +8,12 @@
 
     public class ManagerCollection
     {
-        private Dictionary<string, ManagerBase> _managers = new Dictionary<string, ManagerBase>();
+        private readonly Dictionary<string, ManagerBase> _managers;
+
+        public ManagerCollection()
+        {
+            _managers = new Dictionary<string, ManagerBase>();
+        }
 
         private static ManagerCollection _managerCollection;
         public static ManagerCollection Instance
