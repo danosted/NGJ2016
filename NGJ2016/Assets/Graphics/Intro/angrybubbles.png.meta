@@ -1,11 +1,12 @@
 fileFormatVersion: 2
 guid: 2a9a819661a77f64d8f9482b0c57d5ce
-timeCreated: 1460241283
+timeCreated: 1460247311
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
     21300000: angrybubbles_0
     21300002: angrybubbles_1
+    21300004: angrybubbles_2
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -67,6 +68,17 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 53
+        y: 17
+        width: 37
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: angrybubbles_2
+      rect:
+        serializedVersion: 2
+        x: 103
         y: 17
         width: 37
         height: 25
