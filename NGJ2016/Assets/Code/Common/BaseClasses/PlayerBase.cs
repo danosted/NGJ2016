@@ -160,7 +160,10 @@ namespace Assets.Code.Common.BaseClasses
             if (toilet != null)
             {
                 var winText = GameObject.FindGameObjectWithTag("Win Text").GetComponent<Text>();
+                var sound = gameObject.GetComponent<AudioSource>();
+                sound.Play();
                 winText.text = "Let it riiiiiiipppp!!!";
+                PoopMeter.Poopargeddon = true;
 
             }
         }
