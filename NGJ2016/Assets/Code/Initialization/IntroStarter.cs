@@ -19,7 +19,7 @@ namespace Assets.Code.Initialization
             {
                 Destroy(Hearts.gameObject);
                 SceneManager.LoadScene(1);
-                gameObject.SetActive(false);
+                Speech.gameObject.SetActive(true);
             }
         }
     }
