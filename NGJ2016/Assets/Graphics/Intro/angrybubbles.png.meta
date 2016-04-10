@@ -1,10 +1,12 @@
 fileFormatVersion: 2
-guid: d9f58ac2ea102e84285d0b2ffaba45ac
-timeCreated: 1460237270
+guid: 2a9a819661a77f64d8f9482b0c57d5ce
+timeCreated: 1460247311
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
-    21300000: GoldenToilet_1
+    21300000: angrybubbles_0
+    21300002: angrybubbles_1
+    21300004: angrybubbles_2
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -45,21 +47,43 @@ TextureImporter:
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
-  spritePixelsToUnits: 96
+  spritePixelsToUnits: 48
   alphaIsTransparency: 1
   textureType: 8
   buildTargetSettings: []
   spriteSheet:
     sprites:
-    - name: GoldenToilet_1
+    - name: angrybubbles_0
       rect:
         serializedVersion: 2
-        x: 11
-        y: 2
-        width: 24
-        height: 39
+        x: 5
+        y: 17
+        width: 37
+        height: 25
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: angrybubbles_1
+      rect:
+        serializedVersion: 2
+        x: 53
+        y: 17
+        width: 37
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: angrybubbles_2
+      rect:
+        serializedVersion: 2
+        x: 103
+        y: 17
+        width: 37
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
     outline: []

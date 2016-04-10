@@ -1,10 +1,5 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 using Assets.Code.Common.Objects;
-using Assets.Code.PrefabAccess;
-using UnityEditor;
-using UnityEditor.SceneManagement;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 namespace Assets.Code.Common.BaseClasses
