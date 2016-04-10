@@ -5,6 +5,7 @@ using Assets.Code.PrefabAccess;
 using UnityEditor;
 using UnityEditor.SceneManagement;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 namespace Assets.Code.Common.BaseClasses
 {
@@ -158,7 +159,7 @@ namespace Assets.Code.Common.BaseClasses
             var toilet = coll.gameObject.GetComponent<ToiletBase>();
             if (toilet != null)
             {
-                var winText = canvas.GetComponentInChildren<UnityEngine.UI.Text>();
+                var winText = GameObject.FindGameObjectWithTag("Win Text").GetComponent<Text>();
                 winText.text = "Let it riiiiiiipppp!!!";
 
             }

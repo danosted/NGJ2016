@@ -21,7 +21,7 @@ namespace Assets.Code.Common.BaseClasses
         {
             //OffsetMaxXMin = -600f;
 
-            IncreaseSpeed = 0.05f;
+            IncreaseSpeed = 0.05f+(Random.value/20);
             DecreaseSpeed = 0.15f;
 
             PercentFull = 0.0f;

@@ -2,6 +2,7 @@
 using System.Collections;
 using Assets.Code;
 using Assets.Code.Common.Objects;
+using UnityEngine.SceneManagement;
 
 namespace Assets.Code.Common.BaseClasses
 {
@@ -21,7 +22,7 @@ namespace Assets.Code.Common.BaseClasses
             //OffsetMaxXMin = -600f;
 
             IncreaseSpeed = 0.15f;
-            DecreaseSpeed = 0.01f;
+            DecreaseSpeed = 0.1f;
 
             PercentFull = 1.0f;
             var rectTransform = gameObject.GetComponent<RectTransform>();
@@ -47,7 +48,7 @@ namespace Assets.Code.Common.BaseClasses
         {
             if (PercentFull < 0)
             {
-                //TODO: You lost
+                SceneManager.LoadScene("Game over");
             }
             else if (PercentFull > 1)
             {

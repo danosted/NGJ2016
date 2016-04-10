@@ -61,14 +61,14 @@ namespace Assets.Code.PrefabAccess
 
         public NpcSpawnHandler()
         {
-            _spawnRate = 0.1f;
+            _spawnRate = 0.9f;
             _maxNpcs = 40;
         }
 
         public void SpawnNpc()
         {
             NpcBase npc;
-            if (numWomen == 0 || numBosses/(float) numWomen > 0.8)
+            if (numWomen == 0 || numBosses/(float) numWomen > 0.7)
             {
                 npc = CharacterManager.GetPrefabFromType<WomanBase>();
                 numWomen++;
