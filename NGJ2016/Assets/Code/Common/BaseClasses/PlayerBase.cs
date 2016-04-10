@@ -164,6 +164,7 @@ namespace Assets.Code.Common.BaseClasses
                 PoopMeter.Poopargeddon = true;
                 PoopMeter.DecreaseSpeed = 0;
                 DisgraceMeter.DecreaseSpeed = 0;
+                DisgraceMeter.PercentFull = 1;
             }
         }
     }
