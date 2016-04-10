@@ -21,5 +21,4 @@ src/Assets/Standard Assets*
 */Library/
 */obj/
 */bin/
-*.csproj
 Builds/

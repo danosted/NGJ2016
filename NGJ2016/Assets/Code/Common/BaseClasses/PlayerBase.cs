@@ -40,6 +40,8 @@ namespace Assets.Code.Common.BaseClasses
 
         private Animator anim;
 
+        public ToiletNotifierBase ToiletNotifier { get; set; }
+
         public override void Move()
         {
             float hor;
@@ -144,6 +146,7 @@ namespace Assets.Code.Common.BaseClasses
             FartMeter = canvas.GetComponentInChildren<FartMeterBase>();
             PoopMeter = canvas.GetComponentInChildren<PoopMeterBase>();
             DisgraceMeter = canvas.GetComponentInChildren<DisgraceMeterBase>();
+            ToiletNotifier = canvas.GetComponentInChildren<ToiletNotifierBase>();
             FartSpeedBonus = 2.5f;
             transform.position = new Vector3(1,1);
             anim = GetComponent<Animator>();
