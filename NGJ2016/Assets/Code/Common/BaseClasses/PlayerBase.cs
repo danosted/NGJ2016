@@ -162,6 +162,7 @@ namespace Assets.Code.Common.BaseClasses
                 sound.Play();
                 var winText = canvas.GetComponentInChildren<UnityEngine.UI.Text>();
                 winText.text = "Let it riiiiiiipppp!!!";
+                PoopMeter.Poopargeddon = true;
 
             }
         }
